@@ -123,3 +123,73 @@ SELECT
     TIMESTAMPDIFF(MINUTE, p.updated_at, NOW()) razlika_u_minutama
 FROM
     posudba p;
+
+
+-- spoji tablice posudba sa filmovi i mediji preko vezne tablice zaliha
+SELECT p.datum_posudbe, p.datum_povrata, c.ime, f.naslov, m.tip
+    from posudba p
+    JOIN clanovi c ON p.clan_id = c.id
+    JOIN posudba_kopija pk ON p.id = pk.posudba_id
+    JOIN kopija k ON pk.kopija_id = k.id
+    JOIN filmovi f ON k.film_id = f.id
+    JOIN mediji m ON k.medij_id = m.id;
+
+-- izlistaj posube i film naziv i medij za filmove koji nisu vraceni
+SELECT p.datum_posudbe, p.datum_povrata, c.ime, f.naslov, m.tip
+    from posudba p
+    JOIN clanovi c ON p.clan_id = c.id
+    JOIN posudba_kopija pk ON p.id = pk.posudba_id
+    JOIN kopija k ON pk.kopija_id = k.id
+    JOIN filmovi f ON k.film_id = f.id
+    JOIN mediji m ON k.medij_id = m.id
+    WHERE p.datum_povrata IS NULL;
+
+-- povezi sve tablice i izlistaj podatke
+SELECT
+    p.datum_posudbe,
+    p.datum_povrata,
+    c.ime AS "Ime Clana",
+    f.naslov,
+    m.tip AS Medij,
+    zanrovi.ime AS Zanr,
+    cj.tip_filma,
+    ROUND(cj.cijena * m.koeficijent, 2) AS Cijena,
+    ROUND(cj.zakasnina_po_danu * m.koeficijent, 2) AS Zakasnina
+from
+    posudba p
+    JOIN clanovi c ON p.clan_id = c.id
+    JOIN posudba_kopija pk ON p.id = pk.posudba_id
+    JOIN kopija k ON pk.kopija_id = k.id
+    JOIN filmovi f ON k.film_id = f.id
+    JOIN mediji m ON k.medij_id = m.id
+    JOIN zanrovi ON zanrovi.id = f.zanr_id
+    JOIN cjenik cj ON cj.id = f.cjenik_id;
+
+-- ispisi clanove koji su posudili vise od jednog filma
+SELECT c.id, c.ime, COUNT(pk.kopija_id) broj_posudjenih_kopija
+    FROM clanovi c
+    JOIN posudba p ON p.clan_id = c.id
+    JOIN posudba_kopija pk ON p.id = pk.posudba_id
+    GROUP BY c.id
+    HAVING COUNT(c.id) > 1;
+
+-- GROUP BY - ispisite totalnu kolicinu kopija dostupnih po filmu (zbroj svih medija)
+SELECT f.id, f.naslov, COUNT(k.film_id) AS 'Ukupna Kolicina'
+	from kopija k
+    JOIN filmovi f ON k.film_id = f.id
+    GROUP BY k.film_id;
+
+-- HAVING - filtrirajte gornji upit da izlista samo filmove koji imaju vise od 5 kopija
+SELECT f.id, f.naslov, COUNT(k.film_id) AS ukupna_kolicina
+	from kopija k
+    JOIN filmovi f ON k.film_id = f.id
+    GROUP BY k.film_id
+    HAVING ukupna_kolicina > 5;
+
+-- Dohvati sve filmove koji imaju kolicinu na BlueRay-u
+SELECT f.id, f.naslov, m.tip, count(f.id) broj_kopija_na_blue_ray
+    FROM kopija k
+    JOIN filmovi f ON f.id = k.film_id
+    JOIN mediji m ON k.medij_id = m.id 
+    WHERE m.tip = "Blu-Ray"
+    GROUP BY f.id;
