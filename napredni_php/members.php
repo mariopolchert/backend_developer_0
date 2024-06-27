@@ -15,6 +15,8 @@ if (mysqli_num_rows($result) === 0) {
 
 $members = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+mysqli_close($connection);
+
 ?>
 
 <!doctype html>

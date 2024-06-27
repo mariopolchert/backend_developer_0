@@ -7,14 +7,39 @@ if($connection === false){
     die("Connection failed: ". mysqli_connect_error());
 }
 
-$sql = "SELECT * from clanovi;";
+$sql = "SELECT
+    f.naslov AS naslov_filma,
+    f.godina AS godina_filma,
+    z.ime AS zanr,
+    COUNT(f.id) AS broj_posudbi
+FROM
+    filmovi f
+    JOIN zanrovi z ON f.zanr_id = z.id
+    JOIN kopija k ON k.film_id = f.id
+    JOIN posudba_kopija pk ON pk.kopija_id = k.id
+    JOIN posudba ps ON pk.posudba_id = ps.id
+WHERE ps.datum_posudbe > '2024-01-01'
+GROUP BY k.film_id
+ORDER BY broj_posudbi DESC
+LIMIT 3;";
+
 $result = mysqli_query($connection, $sql);
 
 if (mysqli_num_rows($result) === 0) {
-    die("There are no memebers in our datbase!");
+    die("There are no results for this query in our datbase!");
 }
 
-$members = mysqli_fetch_all($result, MYSQLI_ASSOC);
+$popularMovies = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+$sqlZanrovi = "SELECT f.*, z.ime as zanr from filmovi f JOIN zanrovi z ON f.zanr_id = z.id;";
+$result = mysqli_query($connection, $sqlZanrovi);
+
+if (mysqli_num_rows($result) === 0) {
+    die("There are no results for this query in our datbase!");
+}
+$filmoviPoZanrovima = mysqli_fetch_all($result, MYSQLI_ASSOC);
+mysqli_close($connection);
+var_dump($filmoviPoZanrovima); die();
 
 ?>
 
@@ -55,9 +80,18 @@ $members = mysqli_fetch_all($result, MYSQLI_ASSOC);
             <div class="container py-4">
                 <div class="p-5 mb-4 bg-body-tertiary rounded-3">
                     <div class="container-fluid py-5">
-                        <h1 class="display-5 fw-bold">Custom jumbotron</h1>
-                        <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-                        <button class="btn btn-primary btn-lg" type="button">Example button</button>
+                        <h1 class="display-5 fw-bold">Najpopularniji filmovi</h1>
+
+                        <ul class="list-group my-3">
+                            <?php foreach ($popularMovies as $movie): ?>
+                                <li class="list-group-item">
+                                    <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
+                                    <span class="badge text-bg-primary float-end">Hit</span>
+                                </li>
+                            <?php endforeach ?>
+                        </ul>
+
+                        <button class="btn btn-primary btn-lg" type="button">Vidi sve!</button>
                     </div>
                 </div>
 
