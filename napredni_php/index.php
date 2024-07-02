@@ -119,25 +119,29 @@ mysqli_close($connection);
 
                         <ul class="list-group my-4">
                             <?php foreach ($popularMovies as $movie): ?>
-                                <li class="list-group-item">
+                                <li class="list-group-item bg-body-tertiary">
                                     <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
                                     <span class="badge text-bg-primary float-end"><?= $movie['tip_filma']?></span>
                                 </li>
                             <?php endforeach ?>
                         </ul>
 
-                        <button class="btn btn-primary btn-lg" type="button">Vidi sve!</button>
+                        <button class="btn btn-outline-secondary" type="button">Vidi sve!</button>
                     </div>
                 </div>
 
                 <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr 1fr;">
+                    <?php $counter = 0 ?>
                     <?php foreach ($moviesByGenre as $key => $moviesInGenre): ?>
-                    <?php $isEven = $key % 2 == 0 ?>
+                        <?php 
+                            $isEven = $counter % 2 == 0;
+                            $counter++;
+                        ?>
                         <div class="h-100 p-5 <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary border' ?> rounded-3">
                             <h2><?= $key ?></h2>
                             <ul class="list-group my-4">
                                 <?php foreach ($moviesInGenre as $movie): ?>
-                                    <li class="list-group-item <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary border' ?>">
+                                    <li class="list-group-item <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary' ?>">
                                         <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
                                         <span class="badge text-bg-primary float-end"><?= $movie['tip_filma']?></span>
                                     </li>
