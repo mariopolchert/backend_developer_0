@@ -34,42 +34,61 @@ const QUERY = [
         GROUP BY k.film_id
         ORDER BY broj_posudbi DESC
         LIMIT 3",
-    'genres'
-        => "SELECT * FROM zanrovi ORDER BY id",
-    'moviesByGenre'
+    'moviesWithGenres'
         => "SELECT
-            f.naslov AS naslov_filma,
-            f.godina AS godina_filma,
-            z.ime AS zanr,
-            c.tip_filma
-        FROM
-            zanrovi z
-            JOIN filmovi f ON f.zanr_id = z.id
-            JOIN cjenik c ON f.cjenik_id = c.id
-            WHERE z.id = ",
+                f.naslov AS naslov_filma,
+                f.godina AS godina_filma,
+                z.ime AS zanr,
+                c.tip_filma
+            FROM
+                zanrovi z
+                JOIN filmovi f ON f.zanr_id = z.id
+                JOIN cjenik c ON f.cjenik_id = c.id",
+    'combined'
+        => "SELECT 
+            genre_name,
+            movie_title,
+            movie_year
+        FROM (
+            SELECT 
+                zanrovi.ime AS genre_name,
+                filmovi.naslov AS movie_title,
+                filmovi.godina AS movie_year,
+                ROW_NUMBER() OVER (PARTITION BY zanrovi.ime ORDER BY filmovi.naslov) as rn
+            FROM 
+                filmovi
+            JOIN 
+                zanrovi ON filmovi.zanr_id = zanrovi.id
+        ) as delivery_table
+        WHERE rn <= 5
+        ORDER BY genre_name, movie_title"
 ];
 
-function getData(mysqli $connection, $sql, $id = null): array
+function getData(mysqli $connection, $sql): array
 {
-    $sql .= $id;
     $result = mysqli_query($connection, $sql);
 
     if (mysqli_num_rows($result) === 0) {
-        return ['error' => "nema podataka za upit"];
+        return ['error' => "nema podataka za upit"];// TODO: refactor this
     }
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-
-$genres = getData($connection, QUERY['genres']);
 $popularMovies = getData($connection, QUERY['popularMovies']);
+$moviesWithGenres = getData($connection, QUERY['moviesWithGenres']);
 $moviesByGenre = [];
 
-// n+1 problem !!!
-foreach ($genres as $genre){
-    $moviesByGenre[$genre['ime']] = getData($connection, QUERY['moviesByGenre'], $genre['id']);
+foreach ($moviesWithGenres as $key => $movie) {
+    $genreName = $movie['zanr'];
+
+    if(!isset($moviesByGenre[$genreName])){
+        $moviesByGenre[$genreName] = [];
+    }
+
+    $moviesByGenre[$genreName][] = $movie;
 }
+
 // dd($moviesByGenre);
 
 
@@ -83,7 +102,7 @@ mysqli_close($connection);
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Members</title>
+        <title>Videoteka</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <link rel="stylesheet" href="assets/styles.css">
