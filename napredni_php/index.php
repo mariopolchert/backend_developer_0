@@ -15,51 +15,29 @@ if($connection === false){
     die("Connection failed: ". mysqli_connect_error());
 }
 
-function getPopularMovies(mysqli $connection): array
-{
-    $sql = "SELECT
-        f.naslov AS naslov_filma,
-        f.godina AS godina_filma,
-        z.ime AS zanr,
-        c.tip_filma,
-        COUNT(f.id) AS broj_posudbi
-    FROM
-        filmovi f
-        JOIN zanrovi z ON f.zanr_id = z.id
-        JOIN kopija k ON k.film_id = f.id
-        JOIN posudba_kopija pk ON pk.kopija_id = k.id
-        JOIN posudba ps ON pk.posudba_id = ps.id
-        JOIN cjenik c ON f.cjenik_id = c.id
-    WHERE ps.datum_posudbe > '2024-01-01'
-    GROUP BY k.film_id
-    ORDER BY broj_posudbi DESC
-    LIMIT 3";
-
-    $result = mysqli_query($connection, $sql);
-
-    if (mysqli_num_rows($result) === 0) {
-        die("There are no results for this query in our datbase!");
-    }
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function getGenres(mysqli $connection): array
-{
-    $sql = "SELECT * FROM zanrovi ORDER BY id";
-
-    $result = mysqli_query($connection, $sql);
-
-    if (mysqli_num_rows($result) === 0) {
-        die("There are no results for this query in our datbase!");
-    }
-
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function getMoviesByGenre(mysqli $connection, string $genreId): array
-{
-    $sql = "SELECT
+const QUERY = [
+    'popularMovies'
+        => "SELECT
+            f.naslov AS naslov_filma,
+            f.godina AS godina_filma,
+            z.ime AS zanr,
+            c.tip_filma,
+            COUNT(f.id) AS broj_posudbi
+        FROM
+            filmovi f
+            JOIN zanrovi z ON f.zanr_id = z.id
+            JOIN kopija k ON k.film_id = f.id
+            JOIN posudba_kopija pk ON pk.kopija_id = k.id
+            JOIN posudba ps ON pk.posudba_id = ps.id
+            JOIN cjenik c ON f.cjenik_id = c.id
+        WHERE ps.datum_posudbe > '2024-01-01'
+        GROUP BY k.film_id
+        ORDER BY broj_posudbi DESC
+        LIMIT 3",
+    'genres'
+        => "SELECT * FROM zanrovi ORDER BY id",
+    'moviesByGenre'
+        => "SELECT
             f.naslov AS naslov_filma,
             f.godina AS godina_filma,
             z.ime AS zanr,
@@ -68,26 +46,34 @@ function getMoviesByGenre(mysqli $connection, string $genreId): array
             zanrovi z
             JOIN filmovi f ON f.zanr_id = z.id
             JOIN cjenik c ON f.cjenik_id = c.id
-            WHERE z.id = $genreId";
+            WHERE z.id = ",
+];
 
+function getData(mysqli $connection, $sql, $id = null): array
+{
+    $sql .= $id;
     $result = mysqli_query($connection, $sql);
 
     if (mysqli_num_rows($result) === 0) {
-        die("There are no results for this query in our datbase!");
+        return ['error' => "nema podataka za upit"];
     }
 
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
 
-$moviesByGenre = getMoviesByGenre($connection, 2);
+$genres = getData($connection, QUERY['genres']);
+$popularMovies = getData($connection, QUERY['popularMovies']);
+$moviesByGenre = [];
 
-$genres = getGenres($connection);
-// dd($genres);
-$popularMovies = getPopularMovies($connection);
+// n+1 problem !!!
+foreach ($genres as $genre){
+    $moviesByGenre[$genre['ime']] = getData($connection, QUERY['moviesByGenre'], $genre['id']);
+}
+// dd($moviesByGenre);
 
 
-// mysqli_close($connection);
+mysqli_close($connection);
 
 
 ?>
@@ -144,14 +130,13 @@ $popularMovies = getPopularMovies($connection);
                     </div>
                 </div>
 
-                <!-- n+1 problem !!! -->
                 <div class="d-grid gap-3" style="grid-template-columns: 1fr 1fr 1fr;">
-                    <?php foreach ($genres as $key => $genre): ?>
+                    <?php foreach ($moviesByGenre as $key => $moviesInGenre): ?>
                     <?php $isEven = $key % 2 == 0 ?>
                         <div class="h-100 p-5 <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary border' ?> rounded-3">
-                            <h2><?= $genre['ime'] ?></h2>
+                            <h2><?= $key ?></h2>
                             <ul class="list-group my-4">
-                                <?php foreach (getMoviesByGenre($connection, $genre['id']) as $movie): ?>
+                                <?php foreach ($moviesInGenre as $movie): ?>
                                     <li class="list-group-item <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary border' ?>">
                                         <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
                                         <span class="badge text-bg-primary float-end"><?= $movie['tip_filma']?></span>
@@ -159,7 +144,7 @@ $popularMovies = getPopularMovies($connection);
                                 <?php endforeach ?>
                             </ul>
                             <button class="btn <?= $isEven ? 'btn-outline-light' : 'btn-outline-secondary' ?>" type="button">Vidi vise!</button>
-                                </div>
+                        </div>
                     <?php endforeach ?>
                 </div>
 
