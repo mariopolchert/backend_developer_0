@@ -1,4 +1,4 @@
--- DROP DATABASE IF EXISTS `videoteka`;
+DROP DATABASE IF EXISTS `videoteka`;
 
 CREATE DATABASE IF NOT EXISTS `videoteka` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `videoteka`;
@@ -112,20 +112,20 @@ CREATE TABLE IF NOT EXISTS `clanovi` (
 ) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `clanovi` (`ime`, `prezime`, `adresa`, `telefon`, `email`, `clanski_broj`) VALUES
-('Ivan', 'Horvat', 'DVD', '0912345678', 'ivan.horvat@example.com', 'CLAN12345'),
+('Ivan', 'Horvat', 'Vukovarska 202', '0912345678', 'ivan.horvat@example.com', 'CLAN12345'),
 ('Ana', 'Kovač', 'Ulica Matije Gupca 15', '0912345679', 'ana.kovac@example.com', 'CLAN12346'),
 ('Marko', 'Maric', 'Ulica Ivana Gundulića 5', '0912345680', 'marko.maric@example.com', 'CLAN12347'),
 ('Petra', 'Novak', 'Ulica Stjepana Radića 8', '0912345681', 'petra.novak@example.com', 'CLAN12348'),
 ('Lucija', 'Jurić', 'Ulica bana Jelačića 7', '0912345682', 'lucija.juric@example.com', 'CLAN12349'),
 ('Ivan', 'Perić', 'Trg kralja Tomislava 3', '0912345683', 'ivan.peric@example.com', 'CLAN12350'),
-('Maja', 'Božić', 'Ulica Franje Tuđmana 9', '0912345684', 'maja.bozic@example.com', 'CLAN12351'),
+('Maja', 'Božić', 'Ulica Josipa Broza 9', '0912345684', 'maja.bozic@example.com', 'CLAN12351'),
 ('Nikola', 'Kovačević', 'Ulica Ante Starčevića 6', '0912345685', 'nikola.kovacevic@example.com', 'CLAN12352'),
 ('Ivana', 'Matić', 'Ulica Josipa Jurja Strossmayera 2', '0912345686', 'ivana.matic@example.com', 'CLAN12353'),
 ('Marin', 'Babić', 'Ulica Ljudevita Gaja 10', '0912345687', 'marin.babic@example.com', 'CLAN12354'),
 ('Katarina', 'Petrović', 'Ulica Ivana Mažuranića 4', '0912345688', 'katarina.petrovic@example.com', 'CLAN12355'),
 ('Tomislav', 'Radić', 'Ulica Pavla Šubića 12', '0912345689', 'tomislav.radic@example.com', 'CLAN12356'),
 ('Doris', 'Grgić', 'Trg bana Josipa Jelačića 11', '0912345690', 'doris.grgic@example.com', 'CLAN12357'),
-('Josip', 'Lovrić', 'Ulica Alojzija Stepinca 3', '0912345691', 'josip.lovric@example.com', 'CLAN12358'),
+('Josip', 'Lovrić', 'Ulica Michaela Scumachera 3', '0912345691', 'josip.lovric@example.com', 'CLAN12358'),
 ('Marta', 'Pavlović', 'Ulica Vladimira Nazora 8', '0912345692', 'marta.pavlovic@example.com', 'CLAN12359');
 
 

@@ -41,11 +41,14 @@ mysqli_close($connection);
 
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/napredni_php/" class="nav-link text-white link-primary" aria-current="page"><i class="bi bi-house me-2"></i>Home</a>
+                    <a href="/" class="nav-link text-white link-primary" aria-current="page"><i class="bi bi-house me-2"></i>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="/napredni_php/members.php" class="nav-link text-white link-primary active" aria-current="page"><i class="bi bi-person-circle me-2"></i>Members</a>
+                    <a href="members.php" class="nav-link text-white link-primary active" aria-current="page"><i class="bi bi-person-circle me-2"></i>Members</a>
                 </li>
+                <li class="nav-item">
+            <a href="genres.php" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/genres.php' ? 'active' : '' ?>" aria-current="page"><i class="bi bi-camera-reels me-2"></i>Zanrovi</a>
+        </li>
             </ul>
 
             <hr>
