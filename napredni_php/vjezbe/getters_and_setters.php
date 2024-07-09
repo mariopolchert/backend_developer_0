@@ -1,27 +1,17 @@
 <?php
 
-include 'Vlasnik.php';
 // declare(strict_types=1);
 
 class Car {
 
-    private string $make; // proizvodjac
-    private string $model; // model
-    private string $fuel; // gorivo
-    private int $weight; // masa
-    private Vlasnik $vlasnik;
+    private string $make;
+    private string $model;
+    private string $fuel;
+    private int $weight;
 
-    public function __construct(){}
-
-    public function belongsTo()
+    private function belongsTo()
     {
-        return $this->vlasnik;
-    }
-
-    public function setVlasnik(Vlasnik $vlasnik)
-    {
-        $this->vlasnik = $vlasnik;
-        return $this;
+        
     }
 
     public function getFullName()
@@ -29,11 +19,14 @@ class Car {
         return "$this->make - $this->model";
     }
 
+
+    // getter metoda - vraca vrijednost privatnog svojstva izvan klase
     public function getMake()
     {
         return $this->make;
     }
 
+    // setter metoda - slazi za postavljnje vrijednosti privatnog svojstva izvan klase
     public function setMake(string $make)
     {
         $this->make = $make;
@@ -84,17 +77,12 @@ class Car {
     }
 }
 
-$vlasnik = new Vlasnik("alex", "d", 39, 'M');
-
 $tesla = new Car();
+
 $tesla
     ->setMake('Tesla')
     ->setModel('Model S')
     ->setWeight(2300)
-    ->setFuel('Electric')
-    ->setVlasnik($vlasnik);
+    ->setFuel('Electric');
 
-
-
-// dd($tesla->belongsTo());
-
+echo $tesla->getFullName();

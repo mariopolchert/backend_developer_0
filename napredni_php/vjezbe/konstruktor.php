@@ -1,6 +1,6 @@
 <?php
 
-// include "Car.php";
+include "Car.php";
 
 function dd($var)
 {
@@ -17,23 +17,24 @@ class Vlasnik {
     private string $prezime;
     private int $godine;
     private string $spol;
+    // nullable string -> ovaj property moze biti ili sring ili NULL
     private ?string $adresa;
-    private array $cars;
+    private ?Car $car;
 
     // dodavanje jednod objekta unutar druge klase naziva se Dependency injection
-    public function __construct(string $ime, string $prezime, int $godine, string $spol, array $cars = [], ?string $adresa = null)
+    public function __construct(?Car $car, string $ime, string $prezime, int $godine, string $spol, ?string $adresa)
     {
         $this->ime = $ime;
         $this->prezime = $prezime;
         $this->godine = $godine;
         $this->spol = $spol;
         $this->adresa = $adresa;
-        $this->cars = $cars;
+        $this->car = $car;
     }
 
-    public function hasMany()
+    public function posjeduje()
     {
-        return $this->cars;
+        return $this->car;
     }
 }
 
@@ -44,12 +45,7 @@ $car
     ->setWeight(2300)
     ->setFuel('Electric');
 
-$car1 = new Car();
-$car1
-    ->setMake('Tesla')
-    ->setModel('Model 3')
-    ->setWeight(1800)
-    ->setFuel('Electric');
+$tena = new Vlasnik($car, 'Tena', 'Fiskus', 31, 'Zensko', null);
 
-$tena = new Vlasnik('Tena', 'Fiskus', 31, 'Zensko', [$car, $car1]);
-// dd($tena);
+$tena->posjeduje();
+dd($tena);
