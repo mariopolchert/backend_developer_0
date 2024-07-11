@@ -1,100 +1,53 @@
 <?php
 
-include 'Vlasnik.php';
-// declare(strict_types=1);
+include '../functions.php';
+include 'Vehicle.php';
 
-class Car {
+class Car extends Vehicle {
 
-    private string $make; // proizvodjac
-    private string $model; // model
-    private string $fuel; // gorivo
-    private int $weight; // masa
-    private Vlasnik $vlasnik;
+    private string $marka;
+    private string $model;
+    private string $gorivo;
+    private int $masa;
 
-    public function __construct(){}
-
-    public function belongsTo()
+    public function __construct(string $marka, string $model, string $gorivo, int $masa)
     {
-        return $this->vlasnik;
+        $this->marka = $marka;
+        $this->model = $model;
+        $this->gorivo = $gorivo;
+        $this->masa = $masa;
+
+        parent::__construct('Cestovno', 'B');
     }
 
-    public function setVlasnik(Vlasnik $vlasnik)
+    public function getMarka()
     {
-        $this->vlasnik = $vlasnik;
-        return $this;
+        return $this->marka;
     }
 
-    public function getFullName()
-    {
-        return "$this->make - $this->model";
-    }
-
-    public function getMake()
-    {
-        return $this->make;
-    }
-
-    public function setMake(string $make)
-    {
-        $this->make = $make;
-        return $this;
-    }
-    
     public function getModel(): string
     {
         return $this->model;
     }
 
-    public function setModel(string $var)
+    public function getMasa(): int
     {
-        $this->model = $var;
-        return $this;
-    }
-    
-    public function getWeight(): int
-    {
-        return $this->weight;
+        return $this->masa;
     }
 
-    public function setWeight(int $weight)
+    public function getGorivo(): string
     {
-        $this->weight = $weight;
-        return $this;
+        return $this->gorivo;
     }
 
-    public function getFuel(): string
+    public function getFullName()
     {
-        return $this->fuel;
+        return "$this->marka - $this->model";
     }
 
-    public function setFuel(string $fuel): self
-    {
-        $this->fuel = $fuel;
-        return $this;
-    }
-
-    public function toArray()
-    {
-        return [
-            'make' => $this->make,
-            'model' => $this->model,
-            'fuel' => $this->fuel,
-            'weight' => $this->weight,
-        ];
-    }
 }
 
-$vlasnik = new Vlasnik("alex", "d", 39, 'M');
-
-$tesla = new Car();
-$tesla
-    ->setMake('Tesla')
-    ->setModel('Model S')
-    ->setWeight(2300)
-    ->setFuel('Electric')
-    ->setVlasnik($vlasnik);
+$car = new Car('Tesla', 'Model S', 'Electric', 2300);
 
 
-
-// dd($tesla->belongsTo());
 

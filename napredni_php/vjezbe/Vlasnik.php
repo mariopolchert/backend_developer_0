@@ -1,16 +1,5 @@
 <?php
 
-// include "Car.php";
-
-function dd($var)
-{
-    echo '<pre>';
-    var_dump($var);
-    echo '</pre>';
-    die();
-}
-
-
 class Vlasnik {
 
     private string $ime;
@@ -20,7 +9,6 @@ class Vlasnik {
     private ?string $adresa;
     private array $cars;
 
-    // dodavanje jednod objekta unutar druge klase naziva se Dependency injection
     public function __construct(string $ime, string $prezime, int $godine, string $spol, array $cars = [], ?string $adresa = null)
     {
         $this->ime = $ime;
@@ -37,19 +25,9 @@ class Vlasnik {
     }
 }
 
-$car = new Car();
-$car
-    ->setMake('Tesla')
-    ->setModel('Model S')
-    ->setWeight(2300)
-    ->setFuel('Electric');
+$modelS = new Car('Tesla', 'Model S', 'Electric', 2300);
 
-$car1 = new Car();
-$car1
-    ->setMake('Tesla')
-    ->setModel('Model 3')
-    ->setWeight(1800)
-    ->setFuel('Electric');
+$model3 = new Car('Tesla', 'Model 3', 'Electric', 1800);
 
-$tena = new Vlasnik('Tena', 'Fiskus', 31, 'Zensko', [$car, $car1]);
+$tena = new Vlasnik('Tena', 'Fiskus', 31, 'Zensko', [$modelS, $model3]);
 // dd($tena);
