@@ -4,7 +4,7 @@
     <div class="title flex-between">
         <h1>Zanrovi</h1>
         <div class="action-buttons">
-            <a href="/controllers/genre-create.php" type="submit" class="btn btn-primary">Dodaj novi</a>
+            <a href="/genres/create" type="submit" class="btn btn-primary">Dodaj novi</a>
         </div>
     </div>
 

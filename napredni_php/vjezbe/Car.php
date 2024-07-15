@@ -3,21 +3,28 @@
 include '../functions.php';
 include 'Vehicle.php';
 
-class Car extends Vehicle {
-
+class Car extends Vehicle implements Driveable, Countable
+{
     private string $marka;
     private string $model;
-    private string $gorivo;
-    private int $masa;
+    protected string $gorivo;
 
-    public function __construct(string $marka, string $model, string $gorivo, int $masa)
+    public function __construct(string $marka, string $model, string $gorivo, int $masa, string $tip, string $kategorija)
     {
         $this->marka = $marka;
         $this->model = $model;
         $this->gorivo = $gorivo;
-        $this->masa = $masa;
 
-        parent::__construct('Cestovno', 'B');
+        parent::__construct($tip, $kategorija, $masa);
+    }
+
+    public function drives()
+    {
+        return 'it drives';
+    }
+
+    public function count(): int {
+        return 1;
     }
 
     public function getMarka()
@@ -28,11 +35,6 @@ class Car extends Vehicle {
     public function getModel(): string
     {
         return $this->model;
-    }
-
-    public function getMasa(): int
-    {
-        return $this->masa;
     }
 
     public function getGorivo(): string
@@ -47,7 +49,8 @@ class Car extends Vehicle {
 
 }
 
-$car = new Car('Tesla', 'Model S', 'Electric', 2300);
+$car = new Car('Tesla', 'Model S', 'Electric', 2300, 'Cestovno', 'B');
+
 
 
 

@@ -4,22 +4,20 @@ include_once 'Car.php';
 
 class ElectricCar extends Car
 {
-
-    public int $kilowati;
+    public int $kilovati;
     public string $tipBaterije;
     public string $punjac;
 
-    public function __construct($kilowati, $tipBaterije, $punjac)
+    public function __construct(int $kilovati, string $tipBaterije, string $punjac, string $marka, string $model, string $gorivo, int $masa, string $tip, string $kategorija)
     {
-        $this->kilowati = $kilowati;
+        $this->kilovati = $kilovati;
         $this->tipBaterije = $tipBaterije;
         $this->punjac = $punjac;
 
-        parent::__construct('Tesla', 'Model S', 'Electric', 2300);
+        parent::__construct($marka, $model, $gorivo, $masa, $tip, $kategorija);
     }
-
 }
 
-$electricCar = new ElectricCar(95, 'NMC', 'CCS');
+$electricCar = new ElectricCar(95, 'NMC', 'CCS', 'Tesla', 'Model S', 'electric', 2300, 'cestovno', 'B');
 
 dd($electricCar);

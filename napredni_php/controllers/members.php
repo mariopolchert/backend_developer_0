@@ -2,8 +2,6 @@
 
 // MVC pattern -> Model - View - Controller
 
-require_once '../Database.php';
-
 $db = new Database();
 
 try {

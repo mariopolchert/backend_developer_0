@@ -12,17 +12,17 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="/controllers/members.php" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/members.php' ? 'active' : '' ?>" aria-current="page">
+            <a href="/members" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/members' ? 'active' : '' ?>" aria-current="page">
                 <i class="bi bi-person-circle me-2"></i>Clanovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/controllers/genres.php" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/genres.php' ? 'active' : '' ?>" aria-current="page">
+            <a href="/genres" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/genres' ? 'active' : '' ?>" aria-current="page">
                 <i class="bi bi-camera-reels me-2"></i>Zanrovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/controllers/movies.php" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/movies.php' ? 'active' : '' ?>" aria-current="page">
+            <a href="/movies" class="nav-link text-white link-primary <?= $_SERVER['REQUEST_URI'] === '/movies' ? 'active' : '' ?>" aria-current="page">
                 <i class="bi bi-film me-2"></i>Filmovi
             </a>
         </li>

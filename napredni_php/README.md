@@ -1,4 +1,3 @@
 ### Zadaca
 
-- napraviti members-create.php koristeci najblje prakse sa zadnjeg predavanja
-- napraviti members.view.php po uzoru na genres.view.php
+- napraviti members i movies po uzoru na predavanje sa custom rutama i kontrolerima i pogledima svrstanim po folderima

@@ -1,8 +1,5 @@
 <?php
 
-require_once '../functions.php';
-require_once '../Database.php';
-
 $db = new Database();
 
 try {
@@ -14,4 +11,4 @@ try {
 
 $pageTitle = 'Zanrovi';
 
-require '../views/genres.view.php';
+require '../views/genres/index.view.php';

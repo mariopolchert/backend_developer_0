@@ -4,7 +4,7 @@
     <h1>Dodaj novi Zanr</h1>
     <hr>
 
-    <form class="row g-3 mt-3" action="../controllers/genre-create.php" method="POST">
+    <form class="row g-3 mt-3" action="/genres/store" method="POST">
         <div class="col-auto">
             <label for="zanr" class="mt-1">Naziv Zanra</label>
         </div>
