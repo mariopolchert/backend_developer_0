@@ -7,9 +7,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $db = new Database();
 
     $sql = "SELECT id FROM zanrovi WHERE ime = ?";
-    $count = $db->query($sql, [$zanrName]);
+    $genres = $db->query($sql, [$zanrName]);
 
-    if(!empty($count)){
+    if(!empty($genres)){
         die("Ime $zanrName vec postoji u nasoj bazi!");
     }
     

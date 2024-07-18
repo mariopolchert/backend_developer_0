@@ -1,6 +1,6 @@
 <?php
 
-include_once 'Car.php';
+namespace Vjezbe;
 
 class ElectricCar extends Car
 {

@@ -22,10 +22,14 @@
             <?php foreach ($genres as $genre): ?>
                 <tr>
                     <td><?= $genre['id'] ?></td>
-                    <td><a href="/genre-show.php?id=<?= $genre['id'] ?>"><?= $genre['ime'] ?></a></td>
+                    <td><a href="/genres/show?id=<?= $genre['id'] ?>"><?= $genre['ime'] ?></a></td>
                     <td>
-                        <a href="#" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Uredi Zanr"><i class="bi bi-pencil"></i></a>
-                        <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Obrisi Zanr"><i class="bi bi-trash"></i></button>
+                        <a href="/genres/edit?id=<?= $genre['id'] ?>" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Uredi Zanr"><i class="bi bi-pencil"></i></a>
+                        <form id="delete-form" class="hidden d-inline" method="POST" action="/genres/destroy">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" value="<?= $genre['id'] ?>">
+                            <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Obrisi Zanr"><i class="bi bi-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach ?>

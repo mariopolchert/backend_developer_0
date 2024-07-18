@@ -1,7 +1,8 @@
 <?php
 
-include '../functions.php';
-include 'Vehicle.php';
+namespace Vjezbe;
+
+use \Countable;
 
 class Car extends Vehicle implements Driveable, Countable
 {
@@ -16,6 +17,11 @@ class Car extends Vehicle implements Driveable, Countable
         $this->gorivo = $gorivo;
 
         parent::__construct($tip, $kategorija, $masa);
+    }
+
+    public function getMasa()
+    {
+       
     }
 
     public function drives()

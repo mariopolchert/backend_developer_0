@@ -1,5 +1,6 @@
-
 <?php
+
+// use Core\Database;
 
 const QUERY = [
     'popularMovies'

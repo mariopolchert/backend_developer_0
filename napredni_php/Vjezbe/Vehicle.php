@@ -1,5 +1,7 @@
 <?php
 
+namespace Vjezbe;
+
 abstract class Vehicle {
 
     private string $tip;
@@ -12,6 +14,8 @@ abstract class Vehicle {
         $this->kategorija = $kategorija;
         $this->masa = $masa;
     }
+
+    abstract function getMasa();
 
     public function getTip() : string
     {

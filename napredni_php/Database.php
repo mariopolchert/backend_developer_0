@@ -1,5 +1,9 @@
 <?php
 
+// namespace Core;
+
+// use PDO;
+
 class Database {
 
     private $pdo;
@@ -21,10 +25,12 @@ class Database {
         $statement = $this->pdo->prepare($sql);
         $statement->execute($params);
     
-        $results = $statement->fetchAll();
-
-        return $results;
+        return $statement;
     }
 
+    public function fetch($sql, $params = [])
+    {
+       return  $this->query($sql, $params)->fetch();
+    }
 
 }

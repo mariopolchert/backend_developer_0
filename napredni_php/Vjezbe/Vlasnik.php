@@ -1,5 +1,7 @@
 <?php
 
+namespace Vjezbe;
+
 class Vlasnik {
 
     private string $ime;
