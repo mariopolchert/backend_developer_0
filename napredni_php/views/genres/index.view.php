@@ -15,7 +15,7 @@
             <tr>
                 <th>Id</th>
                 <th>Ime</th>
-                <th></th>
+                <th class="table-action-col"></th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                 <tr>
                     <td><?= $genre['id'] ?></td>
                     <td><a href="/genre-show.php?id=<?= $genre['id'] ?>"><?= $genre['ime'] ?></a></td>
-                    <td class="table-action-col">
+                    <td>
                         <a href="#" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Uredi Zanr"><i class="bi bi-pencil"></i></a>
                         <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Obrisi Zanr"><i class="bi bi-trash"></i></button>
                     </td>

@@ -17,7 +17,7 @@
                 <th>Godina</th>
                 <th>Žanr</th>
                 <th>Tip Filma</th>
-                <th></th>
+                <th class="table-action-col"></th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +28,7 @@
                     <td><?= $movie['godina'] ?></td>
                     <td><?= $movie['zanr'] ?></td>
                     <td><?= $movie['tip_filma'] ?></td>
-                    <td class="table-action-col">
+                    <td>
                         <a href="#" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Movie"><i class="bi bi-pencil"></i></a>
                         <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Movie"><i class="bi bi-trash"></i></button>
                     </td>

@@ -19,7 +19,7 @@
                 <th>Telefon</th>
                 <th>Email</th>
                 <th>Clanski broj</th>
-                <th></th>
+                <th class="table-action-col"></th>
             </tr>
         </thead>
         <tbody>
