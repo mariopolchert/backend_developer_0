@@ -33,6 +33,18 @@ function redirect($path)
     exit();
 }
 
+function isCurrent(string $link, $defaultReturn = "active"): string
+{
+    $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
+    $link = "/" . $link;
+
+    if (str_starts_with($uri, $link)){
+        return $defaultReturn;
+    } else {
+        return '';
+    }
+}
+
 // // autoload classes
 // spl_autoload_register(function ($class_name) {
 //     $class_name = str_replace('\\', DIRECTORY_SEPARATOR, $class_name);
