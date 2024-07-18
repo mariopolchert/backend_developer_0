@@ -1,4 +1,4 @@
-<?php include_once 'partials/header.php' ?>
+<?php include_once base_path('views/partials/header.php'); ?>
 
 <main class="container my-3 d-flex flex-column flex-grow-1">
     <div class="title flex-between">
@@ -33,4 +33,4 @@
     </table>
 </main>
 
-<?php include_once 'partials/footer.php' ?>
+<?php include_once base_path('views/partials/footer.php'); ?>

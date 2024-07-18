@@ -11,6 +11,7 @@
                 <th>Godina</th>
                 <th>Zanr</th>
                 <th>Tip</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>

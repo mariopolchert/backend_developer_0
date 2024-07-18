@@ -11,7 +11,13 @@ switch ($uri) {
         require base_path('controllers/home.php');
         break;
     case '/members':
-        require base_path('controllers/members.php');
+        require base_path('controllers/members/index.php');
+        break;
+    case '/members/create':
+        require base_path('controllers/members/create.php');
+        break;
+    case '/members/store':
+        require base_path('controllers/members/store.php');
         break;
     case '/genres':
         require base_path('controllers/genres/index.php');

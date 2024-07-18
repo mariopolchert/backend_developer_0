@@ -1,4 +1,4 @@
-<?php include_once 'partials/header.php' ?>
+<?php include_once base_path('views/partials/header.php'); ?>
 
 <main class="container my-3 d-flex flex-column flex-grow-1 vh-100">
     <h1>Dodaj novi Zanr</h1>
@@ -18,4 +18,4 @@
 
 </main>
 
-<?php include_once 'partials/footer.php' ?>
+<?php include_once base_path('views/partials/footer.php'); ?>

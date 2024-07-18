@@ -1,3 +1,3 @@
 <?php
 
-require base_path('views/genre-create.view.php');
+require base_path('views/genres/create.view.php');
