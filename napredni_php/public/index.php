@@ -29,7 +29,13 @@ switch ($uri) {
         require base_path('controllers/genres/store.php');
         break;
     case '/movies':
-        require base_path('controllers/movies.php');
+        require base_path('controllers/movies/index.php');
+        break;
+    case '/movies/create':
+        require base_path('controllers/movies/create.php');
+        break;
+    case '/movies/store':
+        require base_path('controllers/movies/store.php');
         break;
     default:
         abort();
