@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
     $clanIme = $_POST['ime'];

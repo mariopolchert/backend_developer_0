@@ -1,6 +1,6 @@
 <?php
 
-// use Core\Database;
+use Core\Database;
 
 const QUERY = [
     'popularMovies'
@@ -69,4 +69,4 @@ foreach ($moviesWithGenres as $key => $movie) {
     }
 }
 
-include '../views/home.view.php';
+include base_path('views/home.view.php');

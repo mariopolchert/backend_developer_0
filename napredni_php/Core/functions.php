@@ -17,7 +17,7 @@ function dd($var)
 
 function base_path($path): string
 {
-    return __DIR__ . DIRECTORY_SEPARATOR . $path;
+    return dirname(__DIR__) . DIRECTORY_SEPARATOR . $path;
 }
 
 function abort($code = 404)

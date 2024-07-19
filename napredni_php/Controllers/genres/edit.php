@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 if (!isset($_GET['id'])) {
     abort();
 }

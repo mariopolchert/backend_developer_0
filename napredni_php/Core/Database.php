@@ -1,8 +1,8 @@
 <?php
 
-// namespace Core;
+namespace Core;
 
-// use PDO;
+use PDO;
 
 class Database {
 
@@ -10,12 +10,12 @@ class Database {
 
     public function __construct()
     {
-        $config = require '../config.php';
+        $config = require base_path('config/database.php');
         $dsn = "mysql:host={$config['host']};dbname={$config['dbname']};charset={$config['charset']}";
 
         try {
             $this->pdo = new PDO($dsn, $config['user'], $config['password'], $config['options']);
-        } catch (\Throwable $exception) {
+        } catch (\PDOException $exception) {
             die('Connection to the database has filed! ' . $exception->getMessage());
         }
     }
@@ -30,7 +30,7 @@ class Database {
 
     public function fetch($sql, $params = [])
     {
-       return  $this->query($sql, $params)->fetch();
+       return $this->query($sql, $params)->fetch();
     }
 
 }

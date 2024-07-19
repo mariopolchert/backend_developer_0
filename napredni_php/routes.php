@@ -1,20 +1,20 @@
 <?php
 
 return [
-    '/'                 => 'controllers/home.php',
-    '/members'          => 'controllers/members/index.php',
-    '/members/create'   => 'controllers/members/create.php',
-    '/members/store'    => 'controllers/members/store.php',
+    '/'                 => 'Controllers/home.php',
+    '/members'          => 'Controllers/members/index.php',
+    '/members/create'   => 'Controllers/members/create.php',
+    '/members/store'    => 'Controllers/members/store.php',
 
-    '/genres'           => 'controllers/genres/index.php',
-    '/genres/show'      => 'controllers/genres/show.php',
-    '/genres/create'    => 'controllers/genres/create.php',
-    '/genres/store'     => 'controllers/genres/store.php',
-    '/genres/edit'      => 'controllers/genres/edit.php',
-    '/genres/update'    => 'controllers/genres/update.php',
-    '/genres/destroy'   => 'controllers/genres/destroy.php',
+    '/genres'           => 'Controllers/genres/index.php',
+    '/genres/show'      => 'Controllers/genres/show.php',
+    '/genres/create'    => 'Controllers/genres/create.php',
+    '/genres/store'     => 'Controllers/genres/store.php',
+    '/genres/edit'      => 'Controllers/genres/edit.php',
+    '/genres/update'    => 'Controllers/genres/update.php',
+    '/genres/destroy'   => 'Controllers/genres/destroy.php',
 
-    '/movies'           => 'controllers/movies/index.php',
-    '/movies/create'    => 'controllers/movies/create.php',
-    '/movies/store'     => 'controllers/movies/store.php',
+    '/movies'           => 'Controllers/movies/index.php',
+    '/movies/create'    => 'Controllers/movies/create.php',
+    '/movies/store'     => 'Controllers/movies/store.php',
 ];

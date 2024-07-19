@@ -1,5 +1,7 @@
 <?php
 
+use Core\Database;
+
 if (!isset($_POST['id'] ) || !isset($_POST['_method']) || $_POST['_method'] !== 'PATCH') {
     abort();
 }
