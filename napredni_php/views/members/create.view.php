@@ -29,7 +29,7 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
         </div>
         <div class="col-12 text-end">
-            <button type="submit" class="btn btn-primary mb-3">Spremi</button>
+            <button type="submit" class="btn btn-success mb-3">Spremi</button>
         </div>
     </form>
 </main>

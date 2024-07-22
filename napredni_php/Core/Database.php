@@ -3,10 +3,12 @@
 namespace Core;
 
 use PDO;
+use PDOStatement;
 
 class Database {
 
-    private $pdo;
+    private PDO $pdo;
+    private PDOStatement $statement;
 
     public function __construct()
     {
@@ -22,15 +24,35 @@ class Database {
 
     public function query($sql, $params = [])
     {
-        $statement = $this->pdo->prepare($sql);
-        $statement->execute($params);
-    
-        return $statement;
+        $this->statement = $this->pdo->prepare($sql);
+
+        try {
+            $this->statement->execute($params);
+        } catch (\PDOException $e) {
+            die('Something went wrong, please try again ' . $e->getMessage());
+        }
+       
+        return $this;
     }
 
-    public function fetch($sql, $params = [])
+    public function find()
     {
-       return $this->query($sql, $params)->fetch();
+       return $this->statement->fetch();
     }
 
+    public function all()
+    {
+       return $this->statement->fetchAll();
+    }
+
+    public function findOrFail()
+    {
+        $data = $this->find();
+
+        if (empty($data)) {
+            abort();
+        }
+
+        return $data;
+    }
 }

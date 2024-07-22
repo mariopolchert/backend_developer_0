@@ -4,12 +4,8 @@ use Core\Database;
 
 $db = new Database();
 
-try {
-    $sql = "SELECT * from clanovi ORDER BY id";
-    $members = $db->query($sql);
-} catch (\Exception $exception) {
-    die("Connection failed: {$exception->getmessage()}");
-}
+$sql = "SELECT * from clanovi ORDER BY id";
+$members = $db->query($sql)->all();
 
 $pageTitle = 'Clanovi';
 
