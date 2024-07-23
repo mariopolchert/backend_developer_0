@@ -4,22 +4,11 @@ use Core\Database;
 
 $db = new Database();
 
-try {
-    $sql = "SELECT * FROM zanrovi ORDER BY id";
+$sql = "SELECT * FROM zanrovi ORDER BY id";
+$genres = $db->query($sql)->all();
 
-    $genres = $db->query($sql);
 
-} catch (\Exception $exception) {
-    $genres = [];
-}
-
-try {
-    $sql = "SELECT * FROM cjenik ORDER BY id";
-
-    $prices = $db->query($sql);
-
-} catch (\Exception $exception) {
-    $prices = [];
-}
+$sql = "SELECT * FROM cjenik ORDER BY id";
+$prices = $db->query($sql)->all();
 
 require base_path('views/movies/create.view.php');
