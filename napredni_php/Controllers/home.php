@@ -53,8 +53,8 @@ const QUERY = [
 
 $db = new Database();
 
-$popularMovies = $db->query(QUERY['popularMovies']);
-$moviesWithGenres = $db->query(QUERY['moviesWithGenres']);
+$popularMovies = $db->query(QUERY['popularMovies'])->all();
+$moviesWithGenres = $db->query(QUERY['moviesWithGenres'])->all();
 $moviesByGenre = [];
 
 foreach ($moviesWithGenres as $key => $movie) {
