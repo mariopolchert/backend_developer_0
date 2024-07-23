@@ -9,6 +9,7 @@ return [
     '/members/store'    => 'Controllers/members/store.php',
     '/members/edit'     => 'Controllers/members/edit.php',
     '/members/update'   => 'Controllers/members/update.php',
+    '/members/destroy'  => 'Controllers/members/destroy.php',
 
     '/genres'           => 'Controllers/genres/index.php',
     '/genres/show'      => 'Controllers/genres/show.php',

@@ -9,6 +9,7 @@ class Database {
 
     private PDO $pdo;
     private PDOStatement $statement;
+    private static ?Database $instance = null;
 
     public function __construct()
     {
@@ -22,6 +23,16 @@ class Database {
         }
     }
 
+    //Singleton design pattern
+    public static function get(): Database
+    {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+
+        return self::$instance;
+    }
+
     public function query($sql, $params = [])
     {
         $this->statement = $this->pdo->prepare($sql);
@@ -29,6 +40,9 @@ class Database {
         try {
             $this->statement->execute($params);
         } catch (\PDOException $e) {
+            if($e->errorInfo[1] === 1451){
+                die("Ne mozete obrisati resurs jer se resurs jos koristi.");
+            }
             die('Something went wrong, please try again ' . $e->getMessage());
         }
        

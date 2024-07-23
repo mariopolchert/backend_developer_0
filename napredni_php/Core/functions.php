@@ -29,7 +29,7 @@ function abort($code = 404)
 
 function redirect($path)
 {
-    header("Location:/$path");
+    header("location:/$path");
     exit();
 }
 
@@ -39,8 +39,7 @@ function goBack(): void
     exit();
 }
 
-
-
+//TODO: move to a Helper calss next 3 functions
 function isCurrent(string $link): bool
 {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];

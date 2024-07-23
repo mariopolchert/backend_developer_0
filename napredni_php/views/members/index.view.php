@@ -36,7 +36,11 @@
                     <td><?= $member['clanski_broj'] ?></td>
                     <td>
                         <a href="/members/edit?id=<?= $member['id'] ?>" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit Member"><i class="bi bi-pencil"></i></a>
-                        <button class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Member"><i class="bi bi-trash"></i></button>
+                        <form action="/members/destroy" method="POST" class="d-inline">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" value="<?= $member['id'] ?>">
+                            <button type="submit" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Member"><i class="bi bi-trash"></i></button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach ?>
