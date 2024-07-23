@@ -7,22 +7,22 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="/" class="nav-link text-white link-primary" aria-current="page">
+            <a href="/" class="nav-link text-white link-primary <?= setActiveCalss("/") ?>" <?= setAriaCurent("/") ?>>
                 <i class="bi bi-house me-2"></i>Home
             </a>
         </li>
         <li class="nav-item">
-            <a href="/members" class="nav-link text-white link-primary <?= isCurrent("members") ?>" aria-current="<?= isCurrent("members", "page") ?>">
+            <a href="/members" class="nav-link text-white link-primary <?= setActiveCalss("members") ?>" <?= setAriaCurent("members") ?>>
                 <i class="bi bi-person-circle me-2"></i>Clanovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/genres" class="nav-link text-white link-primary <?= isCurrent("genres") ?>" aria-current="<?= isCurrent("genres", "page") ?>">
+            <a href="/genres" class="nav-link text-white link-primary <?= setActiveCalss("genres") ?>" <?= setAriaCurent("genres") ?>>
                 <i class="bi bi-camera-reels me-2"></i>Zanrovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/movies" class="nav-link text-white link-primary <?= isCurrent("movies") ?>" aria-current="<?= isCurrent("movies", "page") ?>">
+            <a href="/movies" class="nav-link text-white link-primary <?= setActiveCalss("movies") ?>" <?= setAriaCurent("movies") ?>>
                 <i class="bi bi-film me-2"></i>Filmovi
             </a>
         </li>

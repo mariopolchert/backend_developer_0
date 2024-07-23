@@ -33,15 +33,34 @@ function redirect($path)
     exit();
 }
 
-function isCurrent(string $link, $defaultReturn = "active"): string
+function goBack(): void
+{
+    header("location: {$_SERVER['HTTP_REFERER']}");
+    exit();
+}
+
+
+
+function isCurrent(string $link): bool
 {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-    $link = "/" . $link;
 
-    if (str_starts_with($uri, $link)){
-        return $defaultReturn;
-    } else {
-        return '';
+    if($uri === $link){
+        return true;
     }
+    
+    $route = explode('/', $uri)[1];
+
+    return $route === $link;
+}
+
+function setActiveCalss(string $link): string
+{
+    return isCurrent($link) ? 'active' : '';
+}
+
+function setAriaCurent(string $link): string
+{
+    return isCurrent($link) ? 'aria-curent="page"' : 'aria-curent="false"';
 }
 
