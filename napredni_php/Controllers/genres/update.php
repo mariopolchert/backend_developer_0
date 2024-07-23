@@ -14,19 +14,9 @@ $data = [
 ];
 
 $db = new Database();
-$genres = $db->query('SELECT * FROM zanrovi WHERE id = ?', [$_POST['id']]);
+$genre = $db->query('SELECT * FROM zanrovi WHERE id = ?', [$_POST['id']])->findOrFail();
 
-if(empty($genres)){
-    abort();
-}
+$sql = "UPDATE zanrovi SET ime = ? WHERE id = ?";
+$db->query($sql, [$data['zanr'], $data['id']]);
 
-try {
-    $sql = "UPDATE zanrovi SET ime = ? WHERE id = ?";
-    $db->query($sql, [$data['zanr'], $data['id']]);
-
-    redirect('genres');
-} catch (PDOException $e) {
-    // log the error
-    echo "<p>There was an error processing your request. Please try again.</p>";
-    throw $e;
-}
+redirect('genres');

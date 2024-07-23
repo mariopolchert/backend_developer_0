@@ -8,11 +8,7 @@ if (!isset($_GET['id'])) {
 
 $db = new Database();
 
-$genre = $db->fetch('SELECT * FROM zanrovi WHERE id = ?', [$_GET['id']]);
-
-if(empty($genre)){
-    abort();
-}
+$genre = $db->query('SELECT * FROM zanrovi WHERE id = ?', [$_GET['id']])->findOrFail();
 
 $pageTitle = 'Zanrovi';
 
