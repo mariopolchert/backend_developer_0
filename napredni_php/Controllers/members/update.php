@@ -42,7 +42,11 @@ $db->query($sql, [
     'id' => $_POST['id']
 ]);
 
-
 $pageTitle = "Edit Member";
+
+Session::flash('message', [
+    'type' => 'success',
+    'message' => "Uspjesno uredjeni podaci o clanu '{$data['ime']} {$data['prezime']}'."
+]);
 
 redirect('members');

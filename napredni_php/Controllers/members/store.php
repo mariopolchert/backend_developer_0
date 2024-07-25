@@ -42,4 +42,9 @@ $db->query($sql, [
     'clanski_broj' => $clanskiBroj
 ]);
 
+Session::flash('message', [
+    'type' => 'success',
+    'message' => "Uspjesno kreiran clan '{$data['ime']} {$data['prezime']}'."
+]);
+
 redirect('members');
