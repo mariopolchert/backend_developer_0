@@ -13,26 +13,32 @@
         <div class="col-md-6">
             <label for="ime" class="form-label">Ime</label>
             <input type="text" class="form-control" id="ime" name="ime" value="<?= $member['ime'] ?>" required>
+            <span class="text-danger small"><?= $errors['ime'] ?? '' ?></span>
         </div>
         <div class="col-md-6">
             <label for="prezime" class="form-label">Prezime</label>
             <input type="text" class="form-control" id="prezime" name="prezime" value="<?= $member['prezime'] ?>" required>
+            <span class="text-danger small"><?= $errors['prezime'] ?? '' ?></span>
         </div>
         <div class="col-md-6">
             <label for="adresa" class="form-label">Adresa</label>
             <input type="text" class="form-control" id="adresa" name="adresa" value="<?= $member['adresa'] ?>">
+            <span class="text-danger small"><?= $errors['adresa'] ?? '' ?></span>
         </div>
         <div class="col-md-6">
             <label for="telefon" class="form-label">Telefon</label>
             <input type="text" class="form-control" id="telefon" name="telefon" value="<?= $member['telefon'] ?>">
+            <span class="text-danger small"><?= $errors['telefon'] ?? '' ?></span>
         </div>
         <div class="col-md-6">
             <label for="email" class="form-label">Email</label>
             <input type="email" class="form-control" id="email" name="email" value="<?= $member['email'] ?>" required>
+            <span class="text-danger small"><?= $errors['email'] ?? '' ?></span>
         </div>
         <div class="col-md-6">
             <label for="clanski_broj" class="form-label">Clanski broj</label>
             <input type="text" class="form-control" id="clanski_broj" name="clanski_broj" value="<?= $member['clanski_broj'] ?>" required>
+            <span class="text-danger small"><?= $errors['clanski_broj'] ?? '' ?></span>
         </div>
         <div class="col-12 d-flex justify-content-between">
             <a href="/members" class="btn btn-primary mb-3">Povratak</a>

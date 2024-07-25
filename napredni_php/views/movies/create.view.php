@@ -2,7 +2,7 @@
 
 <main class="container my-3 d-flex flex-column flex-grow-1 vh-100">
     <div class="title flex-between">
-        <h1>Dodaj novog član</h1>
+        <h1>Dodaj novi Film</h1>
         <div class="action-buttons">
         </div>
     </div>

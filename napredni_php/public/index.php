@@ -2,6 +2,8 @@
 
 // CRUD => C = create; R = read; U = update; D = delete
 
+session_start();
+
 require_once '../Core/functions.php';
 require_once base_path('Core/bootstrap.php');
 require_once base_path('Core/router.php');

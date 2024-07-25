@@ -2,6 +2,7 @@
 
 use Core\Database;
 use Core\Validator;
+use Core\Session;
 
 if (!isset($_POST['id'] ) || !isset($_POST['_method']) || $_POST['_method'] !== 'PATCH') {
     abort();
@@ -23,7 +24,8 @@ $member = $db->query($sql, ['id' => $_POST['id']])->findOrFail();
 
 $form = new Validator($rules, $_POST);
 if ($form->notValid()){
-    dd($form->errors());
+    Session::flash('errors', $form->errors());
+    goBack();
 }
 
 $data = $form->getData();
