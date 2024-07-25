@@ -1,29 +1,27 @@
 <?php
 
 use Core\Database;
+use Core\Validator;
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     dd('Unsupported method!');
 }
-    
-$data = [
-    'ime' => $_POST['ime'],
-    'prezime' => $_POST['prezime'],
-    'adresa' => $_POST['adresa'],
-    'telefon' => $_POST['telefon'],
-    'email' => $_POST['email'],
+
+$rules = [
+    'ime' => ['required', 'string', 'max:50', 'min:2'],
+    'prezime' => ['required', 'string','max:50'],
+    'adresa' => ['string','max:100'],
+    'telefon' => ['phone','max:15'],
+    'email' => ['required', 'email', 'max:50', 'unique:clanovi'],
 ];
 
-//TODO: validate the data
-
-$db = new Database();
-
-$sql = "SELECT id FROM clanovi WHERE email = :email";
-$count = $db->query($sql, ['email' => $data['email']])->find();
-
-if(!empty($count)){
-    die("Korisnik sa emailom {$data['email']} vec postoji u nasoj bazi!");
+$form = new Validator($rules, $_POST);
+if ($form->notValid()){
+    dd($form->errors());
 }
+
+$data = $form->getData();
+$db = Database::get();
 
 // Genereate next clanski_broj
 $sql = "SELECT clanski_broj FROM clanovi ORDER BY id DESC LIMIT 1";

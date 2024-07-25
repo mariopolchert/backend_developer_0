@@ -1,24 +1,30 @@
 <?php
 
 use Core\Database;
+use Core\Validator;
 
 if($_SERVER['REQUEST_METHOD'] !== 'POST'){
     dd('Unsupported method!');
 }
-    
-$zanrName = $_POST['zanr'];
 
-$db = new Database();
+$postData = [
+    'ime' => $_POST['zanr'] ?? null
+];
 
-$sql = "SELECT id FROM zanrovi WHERE ime = ?";
-$genres = $db->query($sql, [$zanrName])->find();
+$rules = [
+    'ime' => ['required', 'string', 'max:100', 'unique:zanrovi'],
+];
 
-if(!empty($genres)){
-    die("Ime $zanrName vec postoji u nasoj bazi!");
+$form = new Validator($rules, $postData);
+if ($form->notValid()){
+    dd($form->errors());
 }
 
-$sql = "INSERT INTO zanrovi (ime) VALUES (:ime)";
+$data = $form->getData();
 
-$db->query($sql, ['ime' => $zanrName]);
+$db = Database::get();
+
+$sql = "INSERT INTO zanrovi (ime) VALUES (:ime)";
+$db->query($sql, ['ime' => $data['ime']]);
 
 redirect('genres');

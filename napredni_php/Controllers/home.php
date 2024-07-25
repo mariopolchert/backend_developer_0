@@ -51,7 +51,7 @@ const QUERY = [
         ORDER BY genre_name, movie_title"
 ];
 
-$db = new Database();
+$db = Database::get();
 
 $popularMovies = $db->query(QUERY['popularMovies'])->all();
 $moviesWithGenres = $db->query(QUERY['moviesWithGenres'])->all();

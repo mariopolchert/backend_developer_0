@@ -24,7 +24,7 @@ class Validator
 
     public function getData(): array
     {
-        return $this->form;
+        return $this->data;
     }
 
     public function errors(): array
@@ -40,45 +40,65 @@ class Validator
     private function validate()
     {
         foreach ($this->rules as $field => $rules) {
-            $userInput = $this->form[$field] ?? null;
+            $userInput = $this->form[$field] ?? '';
+            $userInput = trim($userInput);
+            $userInput = empty($userInput) ? null : htmlspecialchars($userInput);// sprjecava XSS napad - cross site scripting
 
+
+            if (!in_array('required', $rules) && is_null($userInput)) {
+                continue;
+            }
+
+            $this->data[$field] = $userInput;
+            
             foreach ($rules as $rule) {
 
                 $additional = null;
+                $matchingField = null;
+
                 if (str_contains($rule, ':')) {
                     $pieces = explode(':', $rule);
                     $rule = $pieces[0];
                     $additional = $pieces[1];
+
+                    if (str_contains($additional, ',')) {
+                        $temp = explode(',', $additional);
+                        $additional = $temp[0];
+                        $matchingField = $temp[1];
+                    }
                 }
 
-                call_user_func([$this, $rule], $userInput, $field, $additional);
+                call_user_func([$this, $rule], $userInput, $field, $additional, $matchingField);
             }
         }
     }
 
-    private function exists($userInput, $field, $table)
+    private function exists($userInput, $field, $table, $matchingField)
     {
-        $sql = "SELECT COUNT(id) AS count from $table WHERE $field = :val";
+        $sql = "SELECT COUNT(id) AS count from $table WHERE $matchingField = :val";
         $result = $this->db->query($sql, [
             'val' => $userInput
         ])->find();
 
-        if ($result['count'] > 0)
-            $this->addError($field, "Podatak za $field {$userInput} vec postoji u nasoj bazi.");
+        if ($result['count'] === 0)
+            $this->addError($field, "Podatak za $field {$userInput} ne postoji u nasoj bazi.");
     }
 
-    private function unique($userInput, $field, $table)
+    private function unique($userInput, $field, $table, $id)
     {
-        $sql = "SELECT COUNT(id) AS count from $table WHERE $field = :val AND id != :id";
-        $result = $this->db->query($sql, [
-            'val' => $userInput,
-            'id' => $_POST['id']
-        ])->find();
+        $sql = "SELECT COUNT(id) AS count from $table WHERE $field = :val";
+        $params =  ['val' => $userInput];
+
+        if ($id) {
+            $sql .= " AND id != :id";
+            $params['id'] = $id;
+        }
+
+        $result = $this->db->query($sql, $params)->find();
 
         if ($result['count'] > 0)
             $this->addError($field, "Podatak za $field {$userInput} vec postoji u nasoj bazi.");
     }
-
 
     private function required($userInput, $field)
     {
@@ -89,8 +109,8 @@ class Validator
 
     private function string($userInput, $field)
     {
-        if(!is_string($userInput)){
-            $this->addError($field, "Polje $field mora biti tekst!");
+        if(!preg_match('/^[\pL0-9\s-]+$/u', $userInput)){
+            $this->addError($field, "Polje $field moze sadrzavati samo slova i brojeve.");
         }
     }
 
@@ -110,15 +130,31 @@ class Validator
 
     private function phone($userInput, $field)
     {
-        // if(!preg_match('/+[0-9]/', $userInput)){
-        //     $this->addError($field, "Polje $field mora valjana e-mail adresa!");
-        // }
+        if(!preg_match('/^(\+\d{3}\s?)(\d{2}\s?)(\d{6,7})$/', $userInput)){
+            $this->addError($field, "Polje $field mora biti u formatu +xxx xx xxxxxx");
+        } else {
+            $this->data[$field] = str_replace(' ', '', $userInput);
+        }
     }
 
     private function max($userInput, $field, $length)
     {
         if(strlen($userInput) > $length){
             $this->addError($field, "Polje $field ne smije biti duze od $length znakova.");
+        }
+    }
+
+    private function min($userInput, $field, $length)
+    {
+        if(strlen($userInput) < $length){
+            $this->addError($field, "Polje $field ne smije biti krace od $length znakova.");
+        }
+    }
+
+    private function clanskiBroj($userInput, $field)
+    {
+        if(!preg_match('/^(CLAN\d{5})$/', $userInput)){
+            $this->addError($field, "Polje $field mora biti u formatu CLANxxxxx");
         }
     }
 }

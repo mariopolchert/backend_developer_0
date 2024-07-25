@@ -2,7 +2,7 @@
 
 use Core\Database;
 
-$db = new Database();
+$db = Database::get();
 
 $sql = "SELECT * from zanrovi ORDER BY id";
 $genres = $db->query($sql)->all();

@@ -6,7 +6,7 @@ if (!isset($_GET['id'])) {
     abort();
 }
 
-$db = new Database();
+$db = Database::get();
 
 $sql = 'SELECT * from zanrovi WHERE id = :id';
 

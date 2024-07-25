@@ -2,7 +2,7 @@
 
 use Core\Database;
 
-$db = new Database();
+$db = Database::get();
 
 $sql = "SELECT * from clanovi ORDER BY id";
 $members = $db->query($sql)->all();

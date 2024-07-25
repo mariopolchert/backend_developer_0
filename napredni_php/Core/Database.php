@@ -41,8 +41,9 @@ class Database {
             $this->statement->execute($params);
         } catch (\PDOException $e) {
             if($e->errorInfo[1] === 1451){
-                die("Ne mozete obrisati resurs jer se resurs jos koristi.");
+                throw new ResourceInUseException();
             }
+            //TODO: return 500 error page with appropriate message
             die('Something went wrong, please try again ' . $e->getMessage());
         }
        

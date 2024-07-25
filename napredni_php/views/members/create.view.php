@@ -18,11 +18,11 @@
         </div>
         <div class="col-md-6">
             <label for="adresa" class="form-label">Adresa</label>
-            <input type="text" class="form-control" id="adresa" name="adresa" placeholder="Adresa" required>
+            <input type="text" class="form-control" id="adresa" name="adresa" placeholder="Adresa">
         </div>
         <div class="col-md-6">
             <label for="telefon" class="form-label">Telefon</label>
-            <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon" required>
+            <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon">
         </div>
         <div class="col-md-12">
             <label for="email" class="form-label">Email</label>

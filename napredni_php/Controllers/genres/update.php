@@ -1,22 +1,31 @@
 <?php
 
 use Core\Database;
+use Core\Validator;
 
 if (!isset($_POST['id'] ) || !isset($_POST['_method']) || $_POST['_method'] !== 'PATCH') {
     abort();
 }
 
-//TODO: do a validation
+$db = Database::get();
+$genre = $db->query('SELECT * FROM zanrovi WHERE id = ?', [$_POST['id']])->findOrFail();
     
-$data = [
-    "id" => $_POST['id'],
-    "zanr" => $_POST['zanr'],
+$postData = [
+    "ime" => $_POST['zanr'],
 ];
 
-$db = new Database();
-$genre = $db->query('SELECT * FROM zanrovi WHERE id = ?', [$_POST['id']])->findOrFail();
+$rules = [
+    'ime' => ['required', 'string', 'max:100', 'unique:zanrovi'],
+];
+
+$form = new Validator($rules, $postData);
+if ($form->notValid()){
+    dd($form->errors());
+}
+
+$data = $form->getData();
 
 $sql = "UPDATE zanrovi SET ime = ? WHERE id = ?";
-$db->query($sql, [$data['zanr'], $data['id']]);
+$db->query($sql, [$data['ime'], $genre['id']]);
 
 redirect('genres');

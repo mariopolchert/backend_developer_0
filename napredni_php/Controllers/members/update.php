@@ -9,12 +9,12 @@ if (!isset($_POST['id'] ) || !isset($_POST['_method']) || $_POST['_method'] !== 
 
 $rules = [
     'id' => ['required', 'numeric'],
-    'ime' => ['required', 'string', 'max:50'],
+    'ime' => ['required', 'string', 'max:50', 'min:2'],
     'prezime' => ['required', 'string','max:50'],
-    'adresa' => ['string'],
-    'telefon' => ['phone','max:12'],
-    'email' => ['required', 'email', 'unique:clanovi'],
-    'clanski_broj' => ['required', 'string', 'unique:clanovi','max:14'],
+    'adresa' => ['string','max:100'],
+    'telefon' => ['phone','max:15'],
+    'email' => ['required', 'email','max:50', 'unique:clanovi,' . $_POST['id']],
+    'clanski_broj' => ['required', 'string', 'max:14', 'clanskiBroj', 'unique:clanovi,' . $_POST['id']],
 ];
 
 $db = Database::get();

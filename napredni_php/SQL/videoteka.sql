@@ -437,3 +437,5 @@ INSERT INTO `posudba_kopija` (`posudba_id`, `kopija_id`) VALUES
 (9, 90),
 (10, 57);
 
+ALTER TABLE `videoteka`.`clanovi`
+CHANGE `telefon` `telefon` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL;
