@@ -117,7 +117,7 @@ class Validator
     private function numeric($userInput, $field)
     {
         if(!is_numeric($userInput)){
-            $this->addError($field, "Polje $field mora brojcana vrijednost!");
+            $this->addError($field, "Polje $field mora biti brojcana vrijednost!");
         }
     }
 

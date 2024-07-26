@@ -1,8 +1,9 @@
-### Zadaca
+### Zadaca preko praznika
+#### 26.07.2024
 
-- refaktorirati sva mjesta gdje koristimo new Database u novu singleton sintaksu -> Database::get()
-- nadopuniti klasu Validator sa metodama po zelji (min, phone, ...)
-- iskoristiti validator i pomocu istoga napraviti validaciju na svim formama koje smo do sada kreirali
-- dodati funkcionalnost za brisanje pojedinog zanra
-
-### i to e to za cetvrtak
+- u genres/show dodati listu filmova koji spadaju u taj zanr
+- za movies/create dodati dodavanje kopija u istom POST requestu
+- zavrsiti CRUD za filmove -> dodati update i delete
+- dodati CRUD funkcionalnost za medije i cjenik
+- napraviti dashboard na ruti /dashboard u kontroleru dashboard/index.php kolji pokazuje tablicu aktivnih posudbi
+- napraviti CRUD za posudbe -> stvara zapis u tablicama 'posudba' i 'kopija_posudba'
