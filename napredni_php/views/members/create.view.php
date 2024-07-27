@@ -33,7 +33,8 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
             <span class="text-danger small"><?= $errors['email'] ?? '' ?></span>
         </div>
-        <div class="col-12 text-end">
+        <div class="col-12 d-flex justify-content-between">
+            <a href="/members" class="btn btn-primary mb-3">Povratak</a>
             <button type="submit" class="btn btn-success mb-3">Spremi</button>
         </div>
     </form>
