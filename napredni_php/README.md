@@ -1,9 +1,9 @@
 ### Zadaca preko praznika
-#### 27.07.2024
+#### 30.07.2024
 
 ##### Zadaci su poredani po tezini IMO. Stoga nastojte rjesavati od prvog prema posljednjem buletu.
 
-* u genres/show dodati listu filmova koji spadaju u taj zanr
+* u genres/show dodati listu filmova koji spadaju u taj zanr [Prikaz](https://github.com/adobrini-algebra/backend_developer_0/tree/main/napredni_php/hints/genre-show.PNG)
 * dodati CRUD funkcionalnost za medije i cjenik [Hint](https://github.com/adobrini-algebra/backend_developer_0/tree/main/napredni_php/views/partials/sidebar.php)
 * zavrsiti CRUD za filmove -> dodati show, update i delete (kod Delete podesiti bazu na ON DELETE CASCADE da se povezane kopije obrisu automatski)
 * za movies/create -> movies/store dodati dodavanje kopija u istom POST requestu [Prikaz](https://github.com/adobrini-algebra/backend_developer_0/tree/main/napredni_php/hints/movie-create.PNG)
