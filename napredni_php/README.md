@@ -1,4 +1,8 @@
 ### Zadaca preko praznika
+
+#### 07.08.2024
+##### Demo aplikaciju mozete pogledati na [ovom](https://algebra.adicio.hr/) linku
+
 #### 30.07.2024
 
 ##### Zadaci su poredani po tezini IMO. Stoga nastojte rjesavati od prvog prema posljednjem buletu.
