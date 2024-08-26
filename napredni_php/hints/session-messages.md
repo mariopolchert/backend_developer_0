@@ -16,8 +16,7 @@
 
 #### Kod za prikaz Flash Messages
 ```php
-$message = Session::all('message');
-Session::unflash();
+$message = Session::get('message');
 
 require base_path('views/rentals/create.view.php');
 ```

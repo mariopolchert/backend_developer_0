@@ -33,7 +33,7 @@ class Database {
         return self::$instance;
     }
 
-    public function query($sql, $params = [])
+    public function query($sql, $params = []): self
     {
         $this->statement = $this->pdo->prepare($sql);
 

@@ -9,8 +9,7 @@ if ($form->notValid()){
 
 #### Kod za prikaz Error Messages
 ```php
-$errors = Session::all('errors');
-Session::unflash();
+$errors = Session::get('errors');
 
 require base_path('views/rentals/create.view.php');
 ```
