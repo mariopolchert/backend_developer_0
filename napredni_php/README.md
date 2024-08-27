@@ -1,3 +1,7 @@
+### Zadaca za 29.08.2024
+
+napraviti dashboard na ruti /dashboard u kontroleru dashboard/index.php kolji pokazuje tablicu aktivnih posudbi
+
 ### Zadaca preko praznika
 
 #### 07.08.2024
