@@ -75,4 +75,9 @@ class Database {
     {
         return $this->pdo->lastInsertId();
     }
+
+    public function connection(): PDO
+    {
+        return $this->pdo;
+    }
 }

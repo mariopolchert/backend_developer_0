@@ -26,4 +26,6 @@ return [
     '/movies/edit'      => 'Controllers/movies/edit.php',
     '/movies/update'    => 'Controllers/movies/update.php',
     '/movies/destroy'   => 'Controllers/movies/destroy.php',
+
+    '/formats'          => 'Controllers/formats/index.php',
 ];
