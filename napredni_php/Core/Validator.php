@@ -151,6 +151,20 @@ class Validator
         }
     }
 
+    private function gt($userInput, $field, $value)
+    {
+        if(floatval($userInput) < intval($value)){
+            $this->addError($field, "Polje $field mora biti brojcana vrijednost veca od $value.");
+        }
+    }
+
+    private function lt($userInput, $field, $value)
+    {
+        if(floatval($userInput) > intval($value)){
+            $this->addError($field, "Polje $field mora biti brojcana vrijednost manja od $value.");
+        }
+    }
+
     private function clanskiBroj($userInput, $field)
     {
         if(!preg_match('/^(CLAN\d{5})$/', $userInput)){

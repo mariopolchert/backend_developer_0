@@ -28,4 +28,8 @@ return [
     '/movies/destroy'   => 'Controllers/movies/destroy.php',
 
     '/formats'          => 'Controllers/formats/index.php',
+    '/formats/show'     => 'Controllers/formats/show.php',
+    '/formats/create'   => 'Controllers/formats/create.php',
+    '/formats/store'    => 'Controllers/formats/store.php',
+    '/formats/edit  '   => 'Controllers/formats/edit.php',
 ];
