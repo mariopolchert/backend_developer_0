@@ -13,14 +13,14 @@ $db = Database::get();
 $rental = $db->query('SELECT * from posudba WHERE id = :id', ['id' => $_POST['pid']])->findOrFail();
 $copy   = $db->query("SELECT * from kopija WHERE id = :id", ['id' => $_POST['kid']])->findOrFail();
 
-$rentals = select from posudba_kopija where posudba_id = $_POST['pid']  --> all()
+// $rentals = select from posudba_kopija where posudba_id = $_POST['pid']  --> all()
 
 
-if (count($rentals) == 1) {
-    samo jedna kopija je u posudbi, oznaci posudbu kao vraceno
-}else{
-    posudba ima jos ne vracenih koopija , samo osvjezi updated_at
-}
+// if (count($rentals) == 1) {
+//     samo jedna kopija je u posudbi, oznaci posudbu kao vraceno
+// }else{
+//     posudba ima jos ne vracenih koopija , samo osvjezi updated_at
+// }
 
 try {
     $db->connection()->beginTransaction(); 

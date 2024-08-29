@@ -1,3 +1,13 @@
+### Zadaca za 02.09.2024
+#### U rentals/destroy dovrsiti ovaj dio
+$rentals = select from posudba_kopija where posudba_id = $_POST['pid']  --> all()
+
+if (count($rentals) == 1) {
+    samo jedna kopija je u posudbi, oznaci posudbu kao vraceno
+}else{
+    posudba ima jos ne vracenih koopija , samo osvjezi updated_at
+}
+
 ### Zadaca za 29.08.2024
 
 napraviti dashboard na ruti /dashboard u kontroleru dashboard/index.php kolji pokazuje tablicu aktivnih posudbi
