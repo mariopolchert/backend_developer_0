@@ -2,6 +2,7 @@
 
 return [
     '/'                 => 'Controllers/home.php',
+    '/dashboard'        => 'Controllers/dashboard/index.php',
 
     '/members'          => 'Controllers/members/index.php',
     '/members/show'     => 'Controllers/members/show.php',
@@ -34,4 +35,6 @@ return [
     '/formats/edit'     => 'Controllers/formats/edit.php',
     '/formats/update'   => 'Controllers/formats/update.php',
     '/formats/destroy'  => 'Controllers/formats/destroy.php',
+
+    '/rentals/destroy'  => 'Controllers/rentals/destroy.php',
 ];
