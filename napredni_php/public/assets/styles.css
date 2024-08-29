@@ -27,5 +27,8 @@ nav .nav a.nav-link.active{
 div.alert {
     position: absolute;
     top: 85px;
-    left: 45%;
+    left: 220px;
+    right: 0;
+    margin: 0 auto;
+    width: fit-content;
 }

@@ -1,6 +1,6 @@
 <?php include_once base_path('views/partials/header.php'); ?>
 
-<main class="container my-3 d-flex flex-column flex-grow-1 vh-100">
+<main class="container my-3 d-flex flex-column flex-grow-1">
     <div class="title flex-between">
         <h1>Mediji</h1>
         <div class="action-buttons">
