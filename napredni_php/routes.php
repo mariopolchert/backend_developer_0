@@ -31,5 +31,6 @@ return [
     '/formats/show'     => 'Controllers/formats/show.php',
     '/formats/create'   => 'Controllers/formats/create.php',
     '/formats/store'    => 'Controllers/formats/store.php',
-    '/formats/edit  '   => 'Controllers/formats/edit.php',
+    '/formats/edit'     => 'Controllers/formats/edit.php',
+    '/formats/update'   => 'Controllers/formats/update.php',
 ];
