@@ -13,26 +13,27 @@ $db = Database::get();
 $rental = $db->query('SELECT * from posudba WHERE id = :id', ['id' => $_POST['pid']])->findOrFail();
 $copy   = $db->query("SELECT * from kopija WHERE id = :id", ['id' => $_POST['kid']])->findOrFail();
 
-// $rentals = select from posudba_kopija where posudba_id = $_POST['pid']  --> all()
-
-
-// if (count($rentals) == 1) {
-//     samo jedna kopija je u posudbi, oznaci posudbu kao vraceno
-// }else{
-//     posudba ima jos ne vracenih koopija , samo osvjezi updated_at
-// }
+$rentals = $db->query('SELECT posudba_id from posudba_kopija WHERE posudba_id = :posudba_id', ['posudba_id' => $_POST['pid']])->all();
 
 try {
     $db->connection()->beginTransaction(); 
 
+    if (count($rentals) === 1) {
+        // samo jedna kopija je u posudbi, oznaci posudbu kao vraceno
+        $db->query('UPDATE posudba SET datum_povrata = ?, updated_at = ? WHERE id = ?', [
+            date('Y-m-d'), date("Y-m-d H:i:s"), $_POST['pid']
+        ]);
+    }else{
+        // posudba ima jos ne vracenih koopija , samo osvjezi updated_at
+        $db->query("UPDATE posudba SET updated_at = :d WHERE id = :pid", [
+            'pid' => $rental['id'],
+            'd' => date("Y-m-d H:i:s")
+        ]);
+    }
+
     $db->query("DELETE from posudba_kopija WHERE posudba_id = :pid AND kopija_id = :kid", [
         'pid' => $rental['id'],
         'kid' => $copy['id'],
-    ]);
-
-    $db->query("UPDATE posudba SET updated_at = :d WHERE id = :pid", [
-        'pid' => $rental['id'],
-        'd' => date("Y-m-d H:i:s")
     ]);
 
     $db->query("UPDATE kopija SET dostupan = 1 WHERE id = :kid", ['kid' => $copy['id']]);
