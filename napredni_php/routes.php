@@ -1,5 +1,11 @@
 <?php
 
+use Controllers\genres\GenresController;
+
+$router->get('/genres', [GenresController::class, 'index']);
+$router->get('/genres/show', [GenresController::class, 'show']);
+$router->delete('/genres/destroy', [GenresController::class, 'destroy']);
+
 return [
     '/'                 => 'Controllers/home.php',
     '/dashboard'        => 'Controllers/dashboard/index.php',
@@ -12,13 +18,13 @@ return [
     '/members/update'   => 'Controllers/members/update.php',
     '/members/destroy'  => 'Controllers/members/destroy.php',
 
-    '/genres'           => 'Controllers/genres/index.php',
-    '/genres/show'      => 'Controllers/genres/show.php',
-    '/genres/create'    => 'Controllers/genres/create.php',
-    '/genres/store'     => 'Controllers/genres/store.php',
-    '/genres/edit'      => 'Controllers/genres/edit.php',
-    '/genres/update'    => 'Controllers/genres/update.php',
-    '/genres/destroy'   => 'Controllers/genres/destroy.php',
+    '/genres'           => [GenresController::class, 'index'],
+    '/genres/show'      => [GenresController::class, 'show'],
+    '/genres/create'    => [GenresController::class, 'create'],
+    '/genres/store'     => [GenresController::class, 'store'],
+    '/genres/edit'      => [GenresController::class, 'edit'],
+    '/genres/update'    => [GenresController::class, 'update'],
+    '/genres/destroy'   => [GenresController::class, 'destroy'],
 
     '/movies'           => 'Controllers/movies/index.php',
     '/movies/show'      => 'Controllers/movies/show.php',
