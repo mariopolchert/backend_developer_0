@@ -1,30 +1,31 @@
 <?php
 
 use Controllers\genres\GenresController;
+use Controllers\members\MembersController;
 
 $router->get('/genres', [GenresController::class, 'index']);
 $router->get('/genres/show', [GenresController::class, 'show']);
+$router->get('/genres/create', [GenresController::class, 'create']);
+$router->post('/genres', [GenresController::class, 'store']);
+$router->get('/genres/edit', [GenresController::class, 'edit']);
+$router->patch('/genres', [GenresController::class, 'update']);
 $router->delete('/genres/destroy', [GenresController::class, 'destroy']);
+
+$router->get('/members',            [MembersController::class, 'index']);
+$router->get('/members/show',       [MembersController::class, 'show']);
+$router->get('/members/create',     [MembersController::class, 'create']);
+$router->post('/members/store',     [MembersController::class, 'store']);
+$router->get('/members/edit',       [MembersController::class, 'edit']);
+$router->patch('/members/update',   [MembersController::class, 'update']);
+$router->delete('/members/destroy', [MembersController::class, 'destroy']);
+
+
+
+
 
 return [
     '/'                 => 'Controllers/home.php',
     '/dashboard'        => 'Controllers/dashboard/index.php',
-
-    '/members'          => 'Controllers/members/index.php',
-    '/members/show'     => 'Controllers/members/show.php',
-    '/members/create'   => 'Controllers/members/create.php',
-    '/members/store'    => 'Controllers/members/store.php',
-    '/members/edit'     => 'Controllers/members/edit.php',
-    '/members/update'   => 'Controllers/members/update.php',
-    '/members/destroy'  => 'Controllers/members/destroy.php',
-
-    '/genres'           => [GenresController::class, 'index'],
-    '/genres/show'      => [GenresController::class, 'show'],
-    '/genres/create'    => [GenresController::class, 'create'],
-    '/genres/store'     => [GenresController::class, 'store'],
-    '/genres/edit'      => [GenresController::class, 'edit'],
-    '/genres/update'    => [GenresController::class, 'update'],
-    '/genres/destroy'   => [GenresController::class, 'destroy'],
 
     '/movies'           => 'Controllers/movies/index.php',
     '/movies/show'      => 'Controllers/movies/show.php',

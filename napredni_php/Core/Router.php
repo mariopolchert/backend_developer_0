@@ -4,7 +4,6 @@ namespace Core;
 
 class Router
 {
-
     private array $routes = [];
 
     public function add(string $uri, array $action, string $method)

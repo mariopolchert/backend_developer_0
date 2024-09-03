@@ -66,8 +66,7 @@ class GenresController
 
     public function update()
     {
-        // TODO: remove _method check
-        if (!isset($_POST['id'] ) || !isset($_POST['_method']) || $_POST['_method'] !== 'PATCH') {
+        if (!isset($_POST['id'] )) {
             abort();
         }
         
@@ -103,11 +102,7 @@ class GenresController
 
 
     public function store()
-    {
-        if($_SERVER['REQUEST_METHOD'] !== 'POST'){
-            dd('Unsupported method!');
-        }
-        
+    {        
         $postData = [
             'ime' => $_POST['zanr'] ?? null
         ];
@@ -134,7 +129,6 @@ class GenresController
 
     public function destroy()
     {
-        // TODO: remove _method check
         if (!isset($_POST['id'])) {
             abort();
         }
