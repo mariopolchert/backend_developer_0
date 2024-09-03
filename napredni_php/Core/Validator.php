@@ -171,4 +171,11 @@ class Validator
             $this->addError($field, "Polje $field mora biti u formatu CLANxxxxx");
         }
     }
+
+    private function password($userInput, $field)
+    {
+        // if(!preg_match('/^(CLAN\d{5})$/', $userInput)){
+        //     $this->addError($field, "Polje $field mora sadrzavati bar jedan poseban znak i jedno veliko slovo");
+        // }
+    }
 }

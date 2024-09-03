@@ -25,8 +25,6 @@ class MembersController
         
         $pageTitle = 'Clanovi';
         
-        $message = Session::get('message');
-        
         require base_path('views/members/index.view.php');
     }
 

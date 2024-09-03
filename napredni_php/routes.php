@@ -4,6 +4,7 @@ use Controllers\genres\GenresController;
 use Controllers\members\MembersController;
 use Controllers\HomeController;
 use Controllers\DashboardController;
+use Controllers\LoginController;
 use Controllers\RegisterController;
 
 $router->get('/', [HomeController::class, 'index']);
@@ -11,6 +12,10 @@ $router->get('/dashboard', [DashboardController::class, 'index']);
 
 $router->get('/register', [RegisterController::class, 'create']);
 $router->post('/register', [RegisterController::class, 'store']);
+
+$router->get('/login', [LoginController::class, 'create']);
+$router->post('/login', [LoginController::class, 'store']);
+$router->post('/logout', [LoginController::class, 'logout']);
 
 $router->get('/genres', [GenresController::class, 'index']);
 $router->get('/genres/show', [GenresController::class, 'show']);
