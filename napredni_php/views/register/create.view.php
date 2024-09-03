@@ -19,14 +19,14 @@
                     
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0 flex-grow-1">
                         <li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
-                        <li><a href="/dashboard" class="nav-link px-2 text-dark">Dashboard</a></li>
+                        <li><a href="/members" class="nav-link px-2 text-dark">Dashboard</a></li>
                         <li><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
                         <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
                         <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
                     </ul>
                     <div class="text-end">
-                        <a href="/login" type="button" class="btn btn-primary me-2">Login</a>
-                        <a href="/register" type="button" class="btn btn-warning">Sign-up</a>
+                        <button type="button" class="btn btn-primary me-2">Login</button>
+                        <button type="button" class="btn btn-warning">Sign-up</button>
                     </div>
                 </div>
             </div>
@@ -35,46 +35,42 @@
             <div class="container py-4">
                 <div class="p-5 mb-4 bg-body-tertiary rounded-3">
                     <div class="container-fluid">
-                        <h1 class="display-5 fw-bold">Najpopularniji filmovi</h1>
-
-                        <ul class="list-group my-5">
-                            <?php foreach ($popularMovies as $movie): ?>
-                                <li class="list-group-item bg-body-tertiary">
-                                    <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
-                                    <span class="badge text-bg-primary float-end"><?= $movie['tip_filma']?></span>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-
-                        <button class="btn btn-outline-secondary" type="button">Vidi sve!</button>
-                    </div>
-                </div>             
-                
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3">
-                    <div class="container-fluid">
-                        <h1 class="display-5 fw-bold">Zanrovi</h1>
-
-                        <div class="d-grid gap-3 mt-5" style="grid-template-columns: 1fr 1fr 1fr;">
-                            <?php $counter = 0 ?>
-                            <?php foreach ($moviesByGenre as $key => $moviesInGenre): ?>
-                                <?php 
-                                    $isEven = $counter % 2 == 0;
-                                    $counter++;
-                                ?>
-                                <div class="h-100 p-5 <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary border' ?> rounded-3">
-                                    <h2><?= $key ?></h2>
-                                    <ul class="list-group my-4">
-                                        <?php foreach ($moviesInGenre as $movie): ?>
-                                            <li class="list-group-item <?= $isEven ? 'text-bg-dark' : 'bg-body-tertiary' ?>">
-                                                <?= $movie['naslov_filma'] ?> (<?= $movie['godina_filma'] ?>) - <?= $movie['zanr'] ?>
-                                                <span class="badge text-bg-primary float-end"><?= $movie['tip_filma']?></span>
-                                            </li>
-                                        <?php endforeach ?>
-                                    </ul>
-                                    <button class="btn <?= $isEven ? 'btn-outline-light' : 'btn-outline-secondary' ?>" type="button">Vidi vise!</button>
-                                </div>
-                            <?php endforeach ?>
-                        </div>
+                        <form class="row g-3 mt-3" action="/register" method="POST">
+                            <div class="col-md-6">
+                                <label for="ime" class="form-label">Ime</label>
+                                <input type="text" class="form-control" id="ime" name="ime" placeholder="Ime" required>
+                                <span class="text-danger small"><?= $errors['ime'] ?? '' ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prezime" class="form-label">Prezime</label>
+                                <input type="text" class="form-control" id="prezime" name="prezime" placeholder="Prezime" required>
+                                <span class="text-danger small"><?= $errors['prezime'] ?? '' ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="adresa" class="form-label">Adresa</label>
+                                <input type="text" class="form-control" id="adresa" name="adresa" placeholder="Adresa">
+                                <span class="text-danger small"><?= $errors['adresa'] ?? '' ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="telefon" class="form-label">Telefon</label>
+                                <input type="text" class="form-control" id="telefon" name="telefon" placeholder="Telefon">
+                                <span class="text-danger small"><?= $errors['telefon'] ?? '' ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                <span class="text-danger small"><?= $errors['email'] ?? '' ?></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="password" class="form-label">Lozinka</label>
+                                <input type="password" class="form-control" id="password" name="password" placeholder="Lozinka" required>
+                                <span class="text-danger small"><?= $errors['password'] ?? '' ?></span>
+                            </div>
+                            <div class="col-12 d-flex justify-content-between">
+                                <a href="/" class="btn btn-primary mb-3">Povratak</a>
+                                <button type="submit" class="btn btn-success mb-3">Registriraj se</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

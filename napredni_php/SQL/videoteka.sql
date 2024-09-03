@@ -442,3 +442,5 @@ CHANGE `telefon` `telefon` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_gen
 
 ALTER TABLE kopija DROP FOREIGN KEY 'kopija_ibfk_1';
 ALTER TABLE kopija ADD FOREIGN KEY (film_id) REFERENCES filmovi(id) ON DELETE CASCADE;
+
+ALTER TABLE `clanovi` ADD COLUMN `password` VARCHAR(255) COLLATE utf8mb4_general_ci NOT NULL;

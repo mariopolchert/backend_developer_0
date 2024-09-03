@@ -34,7 +34,6 @@ class MembersController
 
     public function show()
     {
-
         if (!isset($_GET['id'])) {
             abort();
         }

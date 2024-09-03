@@ -2,6 +2,15 @@
 
 use Controllers\genres\GenresController;
 use Controllers\members\MembersController;
+use Controllers\HomeController;
+use Controllers\DashboardController;
+use Controllers\RegisterController;
+
+$router->get('/', [HomeController::class, 'index']);
+$router->get('/dashboard', [DashboardController::class, 'index']);
+
+$router->get('/register', [RegisterController::class, 'create']);
+$router->post('/register', [RegisterController::class, 'store']);
 
 $router->get('/genres', [GenresController::class, 'index']);
 $router->get('/genres/show', [GenresController::class, 'show']);
