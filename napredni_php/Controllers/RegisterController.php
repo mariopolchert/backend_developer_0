@@ -8,6 +8,13 @@ use Core\Validator;
 
 class RegisterController
 {
+    public function __construct()
+    {
+        if (Session::has('user')){
+            redirect('dashboard');
+        }
+    }
+
     public function create()
     {
         $pageTitle = 'Register';
@@ -67,7 +74,7 @@ class RegisterController
         redirect('dashboard');
     }
 
-    public function login($data)
+    private function login($data)
     {
         Session::put('user', [
             'email' => $data['email'],
@@ -76,8 +83,4 @@ class RegisterController
         session_regenerate_id();
     }
 
-    public function logout()
-    {
-        Session::destroy();
-    }
 }

@@ -10,6 +10,10 @@ class LoginController
 {
     public function create()
     {
+        if (Session::has('user')){
+            redirect('dashboard');
+        }
+
         $pageTitle = 'Login';
         $errors = Session::get('errors');
         require_once base_path('views/login/create.view.php');
