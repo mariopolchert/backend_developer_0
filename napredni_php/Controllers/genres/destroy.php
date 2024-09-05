@@ -17,5 +17,5 @@ try {
     dd('nemere');
 }
 
-redirect('genres');
+redirect('/genres');
 

@@ -38,4 +38,4 @@ Session::flash('message', [
     'message' => "Uspjesno uredjeni podaci o mediju {$data['tip']}",
 ]);
 
-redirect('formats');
+redirect('/formats');

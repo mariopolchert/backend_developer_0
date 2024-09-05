@@ -11,7 +11,7 @@ class RegisterController
     public function __construct()
     {
         if (Session::has('user')){
-            redirect('dashboard');
+            redirect('/dashboard');
         }
     }
 
@@ -71,7 +71,7 @@ class RegisterController
             'message' => "Uspjesno kreiran vas korisnicki racun"
         ]);
 
-        redirect('dashboard');
+        redirect('/dashboard');
     }
 
     private function login($data)

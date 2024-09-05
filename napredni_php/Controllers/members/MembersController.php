@@ -15,7 +15,7 @@ class MembersController
     public function __construct()
     {
         if (Session::has('user') === false){
-            redirect('login');
+            redirect('/login');
         }
 
         $this->db = Database::get();
@@ -114,7 +114,7 @@ class MembersController
             'message' => "Uspjesno uredjeni podaci o clanu '{$data['ime']} {$data['prezime']}'."
         ]);
         
-        redirect('members');
+        redirect('/members');
     }
 
 
@@ -167,7 +167,7 @@ class MembersController
             'message' => "Uspjesno kreiran clan '{$data['ime']} {$data['prezime']}'."
         ]);
         
-        redirect('members');
+        redirect('/members');
     }
 
 
@@ -198,6 +198,6 @@ class MembersController
             'message' => "Uspjesno obrisan clan '{$member['ime']} {$member['prezime']}'."
         ]);
         
-        redirect('members');
+        redirect('/members');
     }
 }

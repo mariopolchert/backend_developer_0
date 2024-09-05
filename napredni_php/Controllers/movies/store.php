@@ -39,4 +39,4 @@ $db->query($sql, [
     'cjenik_id' => $data['cjenik']
 ]);
 
-redirect('movies');
+redirect('/movies');

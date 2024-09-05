@@ -28,4 +28,4 @@ Session::flash('message', [
     'message' => "Uspjesno obrisan medij {$format['tip']}"
 ]);
 
-redirect('formats');
+redirect('/formats');

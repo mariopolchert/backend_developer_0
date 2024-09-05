@@ -90,7 +90,7 @@ class GenresController
         $sql = "UPDATE zanrovi SET ime = ? WHERE id = ?";
         $this->db->query($sql, [$data['ime'], $genre['id']]);
         
-        redirect('genres');
+        redirect('/genres');
     }
 
 
@@ -122,7 +122,7 @@ class GenresController
         $sql = "INSERT INTO zanrovi (ime) VALUES (:ime)";
         $this->db->query($sql, ['ime' => $data['ime']]);
         
-        redirect('genres');
+        redirect('/genres');
     }
 
 
@@ -141,6 +141,6 @@ class GenresController
             dd('nemere');
         }
 
-        redirect('genres');
+        redirect('/genres');
     }
 }

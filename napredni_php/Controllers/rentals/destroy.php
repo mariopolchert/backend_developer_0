@@ -99,4 +99,4 @@ Session::flash('message', [
     'message' => "Uspjesno obrisana posudba {$rental['id']}."
 ]);
 
-redirect('rentals');
+redirect('/rentals');

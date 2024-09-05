@@ -44,7 +44,7 @@ use Core\Session;
         </header>
         <main>
             <div class="container py-4">
-                <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="max-width: 520px;">
+                <div class="p-5 mb-4 bg-body-tertiary rounded-3" style="max-width: 520px; margin: auto">
                     <div class="container-fluid">
                         <form class="row g-3 mt-3" action="/login" method="POST">
                             <div class="col-md-12">
@@ -57,9 +57,9 @@ use Core\Session;
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Lozinka" required>
                                 <span class="text-danger small"><?= $errors['password'] ?? '' ?></span>
                             </div>
-                            <div class="col-12 d-flex justify-content-between">
+                            <div class="col-12 mt-5 d-flex justify-content-between">
                                 <a href="/" class="btn btn-primary mb-3">Povratak</a>
-                                <button type="submit" class="btn btn-success mb-3">Ulogiraj se</button>
+                                <button type="submit" class="btn btn-primary mb-3">Ulogiraj se</button>
                             </div>
                         </form>
                     </div>

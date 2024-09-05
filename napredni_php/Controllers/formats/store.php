@@ -35,4 +35,4 @@ Session::flash('message', [
     'message' => "Uspjesno kreiran novi medij {$data['tip']}"
 ]);
 
-redirect('formats');
+redirect('/formats');

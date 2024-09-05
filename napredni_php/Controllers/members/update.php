@@ -49,4 +49,4 @@ Session::flash('message', [
     'message' => "Uspjesno uredjeni podaci o clanu '{$data['ime']} {$data['prezime']}'."
 ]);
 
-redirect('members');
+redirect('/members');

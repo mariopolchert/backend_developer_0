@@ -40,6 +40,12 @@ class Router
     public function delete(string $uri, array $action)
     {
         $this->add($uri, $action, 'DELETE');
+        return $this;
+    }
+
+    public function with($middleware)
+    {
+        
     }
 
     public function route(string $uri, string $method)
@@ -50,11 +56,11 @@ class Router
                 $function = $route['function'];
 
                 if ($route['auth'] === 'auth' && Session::has('user') === false) {
-                    redirect('login');
+                    redirect('/login');
                 }
 
                 if ($route['auth'] === 'guest' && Session::has('user') === true) {
-                    redirect('dashboard');
+                    redirect('/dashboard');
                 }
 
                 $controller = new $classPath();

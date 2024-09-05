@@ -11,7 +11,7 @@ class LoginController
     public function create()
     {
         if (Session::has('user')){
-            redirect('dashboard');
+            redirect('/dashboard');
         }
 
         $pageTitle = 'Login';
@@ -43,10 +43,10 @@ class LoginController
 
         if ($user && password_verify($data['password'], $user['password'])) {
             $this->login($data);
-            redirect('dashboard');
+            redirect('/dashboard');
         } else {
             Session::flash('errors', ['email' => 'Vas email ili passsord ne valjaju']);
-            redirect('login');
+            redirect('/login');
         }
     }
 
@@ -62,6 +62,6 @@ class LoginController
     public function logout()
     {
         Session::destroy();
-        redirect('');
+        redirect('/');
     }
 }

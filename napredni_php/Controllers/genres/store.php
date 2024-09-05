@@ -29,4 +29,4 @@ $db = Database::get();
 $sql = "INSERT INTO zanrovi (ime) VALUES (:ime)";
 $db->query($sql, ['ime' => $data['ime']]);
 
-redirect('genres');
+redirect('/genres');

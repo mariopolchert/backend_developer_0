@@ -47,4 +47,4 @@ Session::flash('message', [
     'message' => "Uspjesno kreiran clan '{$data['ime']} {$data['prezime']}'."
 ]);
 
-redirect('members');
+redirect('/members');

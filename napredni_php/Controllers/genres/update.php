@@ -28,4 +28,4 @@ $data = $form->getData();
 $sql = "UPDATE zanrovi SET ime = ? WHERE id = ?";
 $db->query($sql, [$data['ime'], $genre['id']]);
 
-redirect('genres');
+redirect('/genres');

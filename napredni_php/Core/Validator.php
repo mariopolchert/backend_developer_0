@@ -124,7 +124,7 @@ class Validator
     private function email($userInput, $field)
     {
         if(!filter_var($userInput, FILTER_VALIDATE_EMAIL)){
-            $this->addError($field, "Polje $field mora valjana e-mail adresa!");
+            $this->addError($field, "Polje $field mora biti valjana e-mail adresa!");
         }
     }
 

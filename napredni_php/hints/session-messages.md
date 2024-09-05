@@ -11,7 +11,7 @@
         'type' => 'success',
         'message' => "Uspjesno uredjena posudba."
     ]);
-    redirect('rentals');
+    redirect('/rentals');
 ```
 
 #### Kod za prikaz Flash Messages
