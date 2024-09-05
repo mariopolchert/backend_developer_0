@@ -1,3 +1,6 @@
+<?php
+use Core\Session;
+?>
 <!doctype html>
 <html lang="en">
     <head>
@@ -25,8 +28,16 @@
                         <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
                     </ul>
                     <div class="text-end">
-                        <a href="/login" type="button" class="btn btn-primary me-2">Login</a>
-                        <a href="/register" type="button" class="btn btn-warning">Sign-up</a>
+                        <?php if ($user = Session::get('user')): ?>
+                            <?= $user['email'] ?>
+                            <form class="ml-2 d-inline" action="/logout" method="POST">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="btn btn-primary me-2">Logout</a>
+                            </form>
+                        <?php else: ?>    
+                            <a href="/login" type="button" class="btn btn-primary me-2">Login</a>
+                            <a href="/register" type="button" class="btn btn-warning">Sign-up</a>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

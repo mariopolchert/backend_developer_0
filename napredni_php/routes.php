@@ -15,7 +15,7 @@ $router->post('/register', [RegisterController::class, 'store']);
 
 $router->get('/login', [LoginController::class, 'create']);
 $router->post('/login', [LoginController::class, 'store']);
-$router->post('/logout', [LoginController::class, 'logout']);
+$router->delete('/logout', [LoginController::class, 'logout']);
 
 $router->get('/genres', [GenresController::class, 'index']);
 $router->get('/genres/show', [GenresController::class, 'show']);
