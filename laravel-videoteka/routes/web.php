@@ -4,20 +4,18 @@ use App\Models\Price;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.home');
 });
 
 Route::get('/prices', function () {
 
     $prices = Price::all();
 
-    return view('prices.index', [
+    return view('admin.prices.index', [
         'prices' => $prices
     ]);
 });
 
-Route::post('/prices', function () {
-    return view('welcome');
-});
+
 
 // ORM - Object Relational Mapping
