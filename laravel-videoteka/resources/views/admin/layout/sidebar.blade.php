@@ -7,43 +7,43 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            {{-- <a href="/" class="nav-link text-white link-primary <?= setActiveCalss("/") ?>" <?= setAriaCurent("/") ?>>
+            <a href="/" class="nav-link text-white link-primary {{ request()->is('/') ? 'active' : '' }}">
                 <i class="bi bi-house me-2"></i>Home
             </a>
         </li>
         <li class="nav-item">
-            <a href="/dashboard" class="nav-link text-white link-primary <?= setActiveCalss("dashboard") ?>" <?= setAriaCurent("dashboard") ?>>
+            <a href="/dashboard" class="nav-link text-white link-primary {{ request()->is('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-clipboard-pulse me-2"></i>Dashboard
             </a>
         </li>
         <li class="nav-item">
-            <a href="/rentals" class="nav-link text-white link-primary <?= setActiveCalss("rentals") ?>" <?= setAriaCurent("rentals") ?>>
+            <a href="/rentals" class="nav-link text-white link-primary {{ request()->is('rentals') ? 'active' : '' }}">
                 <i class="bi bi-credit-card me-2"></i>Posudbe
             </a>
         </li>
         <li class="nav-item">
-            <a href="/members" class="nav-link text-white link-primary <?= setActiveCalss("members") ?>" <?= setAriaCurent("members") ?>>
+            <a href="/members" class="nav-link text-white link-primary {{ request()->is('members') ? 'active' : '' }}">
                 <i class="bi bi-person-circle me-2"></i>Clanovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/genres" class="nav-link text-white link-primary <?= setActiveCalss("genres") ?>" <?= setAriaCurent("genres") ?>>
+            <a href="/genres" class="nav-link text-white link-primary {{ request()->is('genres') ? 'active' : '' }}">
                 <i class="bi bi-camera-reels me-2"></i>Zanrovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/movies" class="nav-link text-white link-primary <?= setActiveCalss("movies") ?>" <?= setAriaCurent("movies") ?>>
+            <a href="/movies" class="nav-link text-white link-primary {{ request()->is('movies') ? 'active' : '' }}">
                 <i class="bi bi-film me-2"></i>Filmovi
             </a>
         </li>
         <li class="nav-item">
-            <a href="/prices" class="nav-link text-white link-primary <?= setActiveCalss("prices") ?>" <?= setAriaCurent("prices") ?>>
+            <a href="/prices" class="nav-link text-white link-primary {{ request()->is('prices') ? 'active' : '' }}">
                 <i class="bi bi-currency-euro me-2"></i>Cjenik
             </a>
         </li>
         <li class="nav-item">
-            <a href="/formats" class="nav-link text-white link-primary <?= setActiveCalss("formats") ?>" <?= setAriaCurent("formats") ?>>
-                <i class="bi bi-disc me-2"></i>Mediji --}}
+            <a href="/formats" class="nav-link text-white link-primary {{ request()->is('formats') ? 'active' : '' }}">
+                <i class="bi bi-disc me-2"></i>Mediji
             </a>
         </li>
     </ul>

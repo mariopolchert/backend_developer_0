@@ -11,4 +11,6 @@ class Price extends Model
 
     protected $table = 'cjenik';
 
+    protected $fillable = ['tip_filma', 'cijena', 'zakasnina_po_danu'];
+
 }
