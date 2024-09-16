@@ -9,4 +9,6 @@ class Price extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['type', 'price', 'late_fee'];
+
 }

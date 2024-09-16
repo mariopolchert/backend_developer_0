@@ -10,6 +10,10 @@
             <div class="content d-flex flex-column flex-grow-1">
                 @include('admin.layout.nav')
 
+                @if (session('message'))
+                    @include('admin.layout.messages', ['message' => session('message')])
+                @endif
+
                 <main class="container my-3 d-flex flex-column flex-grow-1">
                     @yield('content')
                 </main>
