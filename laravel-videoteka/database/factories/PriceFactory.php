@@ -17,9 +17,9 @@ class PriceFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->randomElement(['Hit', 'Ne-hit', 'Stari']),//TODO: improve this
-            'price' => fake()->randomFloat(2, 0, 100),
-            'late_fee' => fake()->randomFloat(2, 0, 100)
+            'type' => fake()->randomElement(['Hit', 'Ne-hit', 'Stari']),
+            'price' => fake()->randomFloat(2, 0, 10),
+            'late_fee' => fake()->randomFloat(2, 0, 5)
         ];
     }
 }
