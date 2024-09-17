@@ -11,4 +11,8 @@ class Price extends Model
 
     protected $fillable = ['type', 'price', 'late_fee'];
 
+    public function movies(){
+        return $this->hasMany(Movie::class);
+    }
+
 }

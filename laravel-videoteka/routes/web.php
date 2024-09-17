@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PriceController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,5 @@ Route::controller(PriceController::class)->group(function(){
     Route::delete('/prices/{price}', 'destroy')->name('prices.destroy');
 });
 
+Route::resource('movies', MovieController::class);
 // Route::resource('prices', PriceController::class);

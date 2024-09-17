@@ -9,4 +9,11 @@ class Movie extends Model
 {
     use HasFactory;
 
+    public function genre(){
+        return $this->belongsTo(Genre::class);
+    }
+
+    public function price(){
+        return $this->belongsTo(Price::class);
+    }
 }

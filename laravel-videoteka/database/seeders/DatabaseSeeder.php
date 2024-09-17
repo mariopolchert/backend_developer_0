@@ -21,7 +21,12 @@ class DatabaseSeeder extends Seeder
         // });
 
 
-        Rental::factory(2)->create();
+        // Rental::factory(2)->sequence(new Sequence(
+        //     ['admin' => 'Y'],
+        //     ['admin' => 'N'],
+        // ))->create();
+
+         Rental::factory(5)->create();
 
         $this->call([
             GenreSeeder::class,

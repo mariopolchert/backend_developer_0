@@ -13,6 +13,7 @@ class PriceController extends Controller
      */
     public function index()
     {
+        // dd(session()->all());
         $prices = Price::all();
 
         return view('admin.prices.index', ['prices' => $prices]);
@@ -33,13 +34,13 @@ class PriceController extends Controller
     {
         $data = $request->validate([
             'type' => ['required', 'string', 'unique:prices'],
-            'price' => ['required', 'numeric'],
-            'late_fee' => ['required', 'numeric'],
+            'price' => ['required', 'numeric', 'gt:0'],
+            'late_fee' => ['required', 'numeric', 'gt:0'],
         ]);
     
         Price::create($data);
     
-        return redirect('/prices')->with('message', ['type' => 'success', 'text' => "Uspjesno kreirana nova cijena"]);
+        return redirect('/prices')->with('success', "Uspjesno kreirana nova cijena");
     }
 
     /**
@@ -65,13 +66,13 @@ class PriceController extends Controller
     {
         $data = $request->validate([
             'type' => ['required', 'string', Rule::unique('prices')->ignore($price)],
-            'price' => ['required', 'numeric'],
-            'late_fee' => ['required', 'numeric'],
+            'price' => ['required', 'numeric', 'gt:0'],
+            'late_fee' => ['required', 'numeric', 'gt:0'],
         ]);
     
         $price->update($data);
     
-        return redirect('/prices')->with('message', ['type' => 'success', 'text' => "Uspjesno uredjena cijena {$price->type}"]);
+        return redirect('/prices')->with('success', "Uspjesno uredjena cijena {$price->type}");
     }
 
     /**
