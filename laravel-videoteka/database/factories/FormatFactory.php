@@ -17,7 +17,7 @@ class FormatFactory extends Factory
     public function definition(): array
     {
         return [
-            'type' => fake()->unique()->randomElement(['VHS', 'CD', 'DVD', 'Blu-ray']),
+            'type' => fake()->word(),
             'coefficient' => fake()->randomFloat(2, 0, 3),
         ];
     }

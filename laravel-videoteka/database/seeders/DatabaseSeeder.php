@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Genre;
 use App\Models\User;
 use App\Models\Price;
 use App\Models\Rental;
@@ -20,11 +21,14 @@ class DatabaseSeeder extends Seeder
         // });
 
 
-        // Rental::factory(5)->create();
+        Rental::factory(2)->create();
 
         $this->call([
+            GenreSeeder::class,
             PriceSeeder::class,
-            RentalSeeder::class
+            FormatSeeder::class,
+            MovieSeeder::class,
+            RentalSeeder::class,
         ]);
 
 

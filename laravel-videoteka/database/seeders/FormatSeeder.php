@@ -8,12 +8,16 @@ use App\Models\Format;
 
 class FormatSeeder extends Seeder
 {
+    private const FORMATS = ['VHS', 'CD', 'DVD', 'Blu-ray'];
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Format::factory(4)->create();
-
+        foreach (self::FORMATS as $format) {
+            Format::factory()->create([
+                'type' => $format
+            ]);
+        }
     }
 }

@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Genre;
 use App\Models\Movie;
+use App\Models\Price;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +15,18 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
-        Movie::factory(50)->create();
+        $allGenres = Genre::all();
+        $allPrices = Price::all();
+
+        foreach ($allGenres as $genre) {
+
+            foreach ($allPrices as $price) {
+
+                Movie::factory(3)->create([
+                    'genre_id' => $genre->id,
+                    'price_id' => $price->id
+                ]);
+            }
+        }
     }
 }

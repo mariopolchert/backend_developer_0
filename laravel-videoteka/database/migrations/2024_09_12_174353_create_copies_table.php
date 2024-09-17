@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('copies', function (Blueprint $table) {
             $table->id();
             $table->string('barcode', 50);
-            $table->unsignedTinyInteger('available')->default(1);
+            $table->boolean('available')->default(true);
             $table->foreignIdFor(Movie::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Format::class)->constrained();
             $table->timestamps();
