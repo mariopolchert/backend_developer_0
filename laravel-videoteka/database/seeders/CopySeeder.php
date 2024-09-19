@@ -13,6 +13,6 @@ class CopySeeder extends Seeder
      */
     public function run(): void
     {
-        Copy::factory(200)->create();
+        // Copy::factory(200)->create();
     }
 }

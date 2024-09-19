@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Format;
 use App\Models\Movie;
+use App\Services\BarcodeService;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -19,15 +20,16 @@ class CopyFactory extends Factory
      */
     public function definition(): array
     {
-        $movie_id = fake()->numberBetween(1, 50);
-        $movie = Movie::find($movie_id);
-        $format_id = fake()->numberBetween(1, 4);
-        $format = Format::find($format_id);
+        $movie = Movie::inRandomOrder()->first();
+        $format = Format::inRandomOrder()->first();
+
+        $barcdeService = new BarcodeService();
+        $barcode = $barcdeService->generate($movie, $format->type);
 
         return [
-            'barcode' => Str::slug($movie->title . '_' . $format->type . '_' . rand(1, 9)),
-            'movie_id' => $movie_id,
-            'format_id' => $format_id,
+            'barcode' => $barcode,
+            'movie_id' => $movie->id,
+            'format_id' => $format->id,
         ];
     }
 }

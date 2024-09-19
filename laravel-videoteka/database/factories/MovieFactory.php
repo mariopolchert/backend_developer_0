@@ -19,7 +19,7 @@ class MovieFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->catchPhrase(),
+            'title' => ucfirst(strtolower(implode(' ', fake()->words(fake()->numberBetween(1, 3))))),
             'year' => fake()->numberBetween(1930, 2024),
             'genre_id' => Genre::factory(),
             'price_id' => Price::factory(),

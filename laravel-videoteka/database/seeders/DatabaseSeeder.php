@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         //     ['admin' => 'N'],
         // ))->create();
 
-         Rental::factory(5)->create();
+        Rental::factory(5)->create();
 
         $this->call([
             GenreSeeder::class,
