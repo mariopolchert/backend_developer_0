@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Format;
+use App\Models\Genre;
 use App\Models\Movie;
+use App\Models\Price;
 use Illuminate\Http\Request;
 
 class MovieController extends Controller
@@ -12,17 +15,9 @@ class MovieController extends Controller
      */
     public function index()
     {
-        $movies = Movie::with(['genre', 'price'])->paginate(20);
-
-        // $moviesFiltered = $movies->filter(function($movie){
-        //     return $movie->id > 100;
-        // });
+        $movies = Movie::with(['genre', 'price'])->latest()->paginate(20);
 
         return view('admin.movies.index', compact('movies'));
-
-        // JSON - JavaScript Object Notation
-        // REST API - application interface
-        // return $movies;
     }
 
     /**
@@ -30,7 +25,11 @@ class MovieController extends Controller
      */
     public function create()
     {
-        //
+        $genres = Genre::all();
+        $prices = Price::all();
+        $formats = Format::all();
+
+        return view('admin.movies.create', compact('genres', 'prices', 'formats'));
     }
 
     /**
@@ -38,7 +37,16 @@ class MovieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255', 'min:2'],
+            'year' => ['required', 'numeric'],
+            'genre_id' => ['required', 'exists:genres,id'],
+            'price_id' => ['required', 'exists:prices,id'],
+        ]);
+
+        Movie::create($data);
+
+        return redirect()->route('movies.index')->with('success', "Uspjesno dodan novi film $data[title]");
     }
 
     /**
@@ -46,7 +54,7 @@ class MovieController extends Controller
      */
     public function show(Movie $movie)
     {
-        //
+        return view('admin.movies.show', compact('movie'));
     }
 
     /**
@@ -54,7 +62,10 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+        $genres = Genre::all();
+        $prices = Price::all();
+
+        return view('admin.movies.edit', compact('genres', 'prices', 'movie'));
     }
 
     /**
@@ -62,7 +73,21 @@ class MovieController extends Controller
      */
     public function update(Request $request, Movie $movie)
     {
-        //
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:255', 'min:2'],
+            'year' => ['required', 'numeric'],
+            'genre_id' => ['required', 'exists:genres,id'],
+            'price_id' => ['required', 'exists:prices,id'],
+        ]);
+
+        // $movie->update($data);
+        $movie->title = $data['title'];
+        $movie->year = $data['year'];
+        $movie->genre_id = $data['genre_id'];
+        $movie->price_id = $data['price_id'];
+        $movie->save();
+
+        return redirect()->back()->with('success', "Uspjesno uredjen film $data[title]");
     }
 
     /**
@@ -70,6 +95,8 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie)
     {
-        //
+        $movie->delete();
+
+        return redirect()->route('movies.index')->with('success', "Uspjesno obrisan film $movie[title]");
     }
 }

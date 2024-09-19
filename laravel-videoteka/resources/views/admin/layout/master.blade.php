@@ -3,7 +3,7 @@
         @include('admin.layout.head')
     </head>
     <body>
-        <div class="page-wrapper d-flex h-100">
+        <div class="page-wrapper d-flex">
     
             @include('admin.layout.sidebar')
             

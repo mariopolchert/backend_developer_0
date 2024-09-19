@@ -1,43 +1,72 @@
 @extends('admin.layout.master')
 
-@section('page-title', 'Uredi cijenu za ' . $price->type)
+@section('title', 'Uredi film')
 
 @section('content')
-    <div class="title flex-between">
-        <h1>
-            Uredi cijenu za {{ $price->type }}
-        </h1>
-    </div>
 
+    <h1>Uredi film</h1>
     <hr>
-
-    <form class="row g-3 mt-3" method="POST" action="/prices/{{ $price->id }}">
+    <form class="row g-3 mt-3" action="/movies/{{$movie->id}}" method="POST">
         @csrf
         @method('PUT')
-        <div class="col-md-4">
-            <label for="type" class="form-label">Tip Filma</label>
-            <input type="text" class="form-control @error('type') is-invalid @enderror" id="type" name="type" value="{{ $price->type }}">
-            @error('type')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+        <div class="row mt-3">
+            <div class="col-1">
+                <label for="title" class="mt-1">Naslov</label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="title" name="title" value="{{ $movie->title }}" required>
+                @error('title')
+                    <span class="text-danger small">{{$message}}</span>
+                @enderror
+            </div>
         </div>
-        <div class="col-md-4">
-            <label for="price" class="form-label">price</label>
-            <input type="number" step="0.01" class="form-control @error('price') is-invalid @enderror" id="price" name="price" value="{{ $price->price }}">
-            @error('price')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+        <div class="row mt-3">
+            <div class="col-1">
+                <label for="year" class="mt-1">Godina</label>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" id="year" name="year" value="{{ $movie->year }}" required>
+                @error('year')
+                    <span class="text-danger small">{{$message}}</span>
+                @enderror
+            </div>
         </div>
-        <div class="col-md-4">
-            <label for="late_fee" class="form-label">Zakasnina</label>
-            <input type="number" step="0.01" class="form-control @error('late_fee') is-invalid @enderror" id="late_fee" name="late_fee" value="{{ $price->late_fee }}">
-            @error('late_fee')
-                <div class="invalid-feedback">{{ $message }}</div>
-            @enderror
+        <div class="row mt-3">
+            <div class="col-1">
+                <label for="genre_id" class="mt-1">Žanr</label>
+            </div>
+            <div class="col-6">
+                <select class="form-select form-select mb-2" id="genre_id" name="genre_id">
+                    @foreach($genres as $genre)
+                        <option value="{{$genre->id}}" {{ $genre->id === $movie->genre_id ? 'selected' : '' }}>{{$genre->name}}</option>
+                    @endforeach
+                </select>
+                @error('genre_id')
+                    <span class="text-danger small">{{$message}}</span>
+                @enderror
+            </div>
         </div>
-        <div class="col-12 d-flex mt-4 justify-content-between">
-            <a href="/prices" class="btn btn-primary mb-3">Povratak</a>
-            <button type="submit" class="btn btn-success mb-3">Spremi</button>
+        <div class="row mt-3">
+            <div class="col-1">
+                <label for="price_id" class="mt-1">Tip filma</label>
+            </div>
+            <div class="col-6">
+                <select class="form-select form-select mb-2" id="price_id" name="price_id">
+                    @foreach($prices as $price)
+                        <option value="{{$price->id}}" {{ $movie->price_id === $price->id ? 'selected' : '' }}>{{$price->type}}</option>
+                        {{-- <option value="{{$price->id}}" {{ $movie->price->is($price) ? 'selected' : '' }}>{{$price->type}}</option> --}}
+                    @endforeach
+                </select>
+                @error('price_id')
+                    <span class="text-danger small">{{$message}}</span>
+                @enderror
+            </div>
+        </div>
+        <hr>
+        <div class="col-auto">
+            <a href="{{ url()->previous() }}" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Povratak"><i class="bi bi-arrow-return-left"></i></a>
+            <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Spremi"><i class="bi bi-floppy"></i></button>
         </div>
     </form>
+
 @endsection
