@@ -14,5 +14,4 @@ class Price extends Model
     public function movies(){
         return $this->hasMany(Movie::class);
     }
-
 }

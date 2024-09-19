@@ -18,4 +18,8 @@ class Movie extends Model
     public function price(){
         return $this->belongsTo(Price::class);
     }
+
+    public function copies(){
+        return $this->hasMany(Copy::class);
+    }
 }
