@@ -16,18 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(5)->each(function($user){
-        //     $user->rental->make();
-        // });
-
-
-        // Rental::factory(2)->sequence(new Sequence(
-        //     ['admin' => 'Y'],
-        //     ['admin' => 'N'],
-        // ))->create();
-
-        Rental::factory(5)->create();
-
         $this->call([
             GenreSeeder::class,
             PriceSeeder::class,
