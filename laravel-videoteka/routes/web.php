@@ -1,22 +1,17 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('frontend.home');
 });
 
-// Route::get('/prices', [PriceController::class, 'index'])->name('prices.index');
-// Route::get('/prices/create', [PriceController::class, 'create'])->name('prices.create');
-// Route::post('/prices', [PriceController::class, 'store'])->name('prices.store');
-// Route::get('/prices/{price}', [PriceController::class, 'show'])->name('prices.show');
-// Route::get('/prices/{price}/edit', [PriceController::class, 'edit'])->name('prices.edit');
-// Route::put('/prices/{price}', [PriceController::class, 'update'])->name('prices.update');
-// Route::delete('/prices/{price}', [PriceController::class, 'destroy'])->name('prices.destroy');
 
- Route::delete('/prices/alex', [PriceController::class, 'alex'])->name('prices.alex');
+Route::delete('/prices/alex', [PriceController::class, 'alex'])->name('prices.alex');
 
 Route::controller(PriceController::class)->group(function(){
     Route::get('/prices', 'index')->name('prices.index');
@@ -29,4 +24,10 @@ Route::controller(PriceController::class)->group(function(){
 });
 
 Route::resource('movies', MovieController::class);
-// Route::resource('prices', PriceController::class);
+Route::resource('rentals', RentalController::class);
+
+
+Route::controller(DashboardController::class)->group(function(){
+    Route::get('/dashboard', 'index')->name('dashboard.index');
+    Route::patch('/dashboard/return', 'return')->name('dashboard.return');
+});
