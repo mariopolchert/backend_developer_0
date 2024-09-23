@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormatController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PriceController;
 use App\Http\Controllers\RentalController;
@@ -25,6 +26,7 @@ Route::controller(PriceController::class)->group(function(){
 
 Route::resource('movies', MovieController::class);
 Route::resource('rentals', RentalController::class);
+Route::resource('formats', FormatController::class);
 
 
 Route::controller(DashboardController::class)->group(function(){

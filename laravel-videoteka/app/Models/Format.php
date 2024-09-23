@@ -9,6 +9,8 @@ class Format extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['type', 'coefficient'];
+
     public function copies(){
         return $this->hasMany(Copy::class);
     }

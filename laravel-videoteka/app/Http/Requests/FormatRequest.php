@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRentalRequest extends FormRequest
+class FormatRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class UpdateRentalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'type' => ['required', 'string', 'unique:formats'],
+            'coefficient' => ['required', 'numeric', 'gt:0'],
         ];
     }
 }
