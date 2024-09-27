@@ -38,7 +38,7 @@
                 </div>
             @else   
                 <a href="/login" type="button" class="btn btn-primary me-2">Login</a>
-                <a href="/register" type="button" class="btn btn-warning">Sign-up</a>
+                <a href="{{ route('register.create') }}" type="button" class="btn btn-warning">Sign-up</a>
             @endauth               
         </div>
     </div>

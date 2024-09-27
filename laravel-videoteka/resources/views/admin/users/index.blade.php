@@ -28,7 +28,7 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->member_id }}</td>
-                    <td><a href="{{ route('users.show',$user->id) }}">{{ $user->first_name }} {{ $user->last_name }}</a></td>
+                    <td><a href="{{ route('users.show',$user->id) }}">{{ $user->fullName() }}</a></td>
                     <td>{{ $user->email }}</td>
                     <td>
                         <a href="{{ route('users.edit',$user->id) }}" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Uredi"><i class="bi bi-pencil"></i></a>

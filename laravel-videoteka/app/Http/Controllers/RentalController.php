@@ -70,10 +70,10 @@ class RentalController extends Controller
         $rental->price_total = 0;
         foreach ($rental->copies as $copy) {
             $returnDate = new Carbon($copy->pivot->return_date) ?? now();
-            $lateDays = Carbon::create($rental->rental_date)->diffInDays($returnDate);
+            $lateDays = $rental->rental_date->diffInDays($returnDate);
             
             if ($lateDays <= 1) {
-                $copy->late_days = 0;
+                $copy->lateDays = 0;
                 $copy->late_total = 0;
                 $copy->price_total = $copy->movie->price->price * $copy->format->coefficient;
             } else {

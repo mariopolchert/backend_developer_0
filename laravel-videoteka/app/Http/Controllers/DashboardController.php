@@ -6,6 +6,7 @@ use App\Models\Copy;
 use App\Models\Rental;
 use App\Models\User;
 use DateTimeImmutable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller

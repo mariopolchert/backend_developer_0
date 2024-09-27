@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\CopyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormatController;
@@ -11,6 +12,9 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
+
+Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 Route::get('/', [HomeController::class, 'index']);
 

@@ -29,4 +29,8 @@ class User extends Authenticatable
     public function rentals() {
         return $this->hasMany(Rental::class);
     }
+
+    public function fullName() {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

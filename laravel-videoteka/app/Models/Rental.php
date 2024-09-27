@@ -11,6 +11,14 @@ class Rental extends Model
 
     protected $guarded = ['id'];
 
+    protected function casts(): array
+    {
+        return [
+            'return_date' => 'immutable_datetime',
+            'rental_date' => 'immutable_datetime',
+        ];
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
@@ -18,4 +26,6 @@ class Rental extends Model
     public function copies() {
         return $this->belongsToMany(Copy::class)->withPivot('return_date');
     }
+
+
 }
