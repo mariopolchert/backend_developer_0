@@ -22,8 +22,7 @@ class FormatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'string', 'unique:formats'],
-            'coefficient' => ['required', 'numeric', 'gt:0'],
+            //
         ];
     }
 }

@@ -2,11 +2,12 @@
 
 @section('title', 'Nadzorna ploča')
 
-@section('content')  
+@section('main')  
     
     <h1>Nova posudba</h1>
     <hr>
-    <form class="row g-3 mt-3" action="/rentals" method="POST">
+    <form class="row g-3 mt-3" action="{{ route('rentals.store') }}" method="POST">
+        @csrf
         <div class="row mt-3">
             <div class="col-1">
                 <label for="user" class="mt-1">Član</label>
@@ -18,24 +19,24 @@
                             <option value="{{ $user->id }}">{{ $user->first_name . ' ' . $user->last_name . ' (' . $user->member_id . ')' }}</option>
                         @endforeach
                 </select>
-                @error('user_id')
-                    <span class="text-danger small">{{$message}}</span>
+                @error('user')
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-1">
-                <label for="movie_media" class="mt-1">Kopija filma</label>
+                <label for="copy" class="mt-1">Kopija filma</label>
             </div>
             <div class="col-6">
-                <select class="form-select form-select mb-2" id="movie_media" name="movie_media">
+                <select class="form-select form-select mb-2" id="copy" name="copy">
                     <option selected>Odaberi</option>
                         @foreach($copies as $copy)
-                            <option value="{{ $copy->id }}">{{ $copy->title . ' (' . $copy->year . ') - ' . $copy->type . ' (' . $copy->amount . ')' }}</option>
+                            <option value="{{ $copy->barcode }}">{{ $copy->title . ' (' . $copy->year . ') - ' . $copy->type . ' (' . $copy->amount . ')' }}</option>
                         @endforeach
                 </select>
-                @error('copy_id')
-                    <span class="text-danger small">{{$message}}</span>
+                @error('copy')
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
@@ -54,29 +55,33 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Posudba - povrat</th>
+                <th>Datum posudbe</th>
                 <th>Član</th>
                 <th>Naslov</th>
-                <th>Cijena - zakasnina (€)</th>
+                <th>Ukupna cijena</th>
                 <th class="table-action-col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach($rentals as $rental)
-                <tr>
-                    <td>{{ $rental->id }}</td>
-                    <td><a href="{{ route('rentals.show', $rental->id) }}">{{ $rental->rental_date}} - {{$rental->return_date ?? '' }}</a></td>
-                    <td>{{ $rental->first_name . ' ' . $rental->last_name . ' (' . $rental->member_id . ')' }}</td>
-                    <td>{{ $rental->title . ' (' . $rental->year . ') - ' . $rental->format }}</td>
-                    <td>{{ $rental->price . ' - ' . $rental->late_fee }}</td>
-                    <td>
-                        <form action="{{ route('dashboard.return', $rental->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('PATCH')
-                            <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vrati"><i class="bi bi-arrow-counterclockwise"></i></button>
-                        </form>
-                    </td>
-                </tr>
+                @foreach($rental->copies as $copy)
+                    <tr>
+                        <td>{{ $rental->id }}</td>
+                        <td><a href="{{ route('rentals.show', $rental->id) }}">{{ $rental->rental_date}}</a></td>
+                        <td>{{ $rental->user->first_name . ' ' . $rental->user->last_name . ' (' . $rental->user->member_id . ')' }}</td>
+                        <td>
+                            {{ $copy->movie->title . ' (' . $copy->movie->year . ') - ' . $copy->format->type }}<br>
+                        </td>
+                        <td>{{ $rental->price_total }}</td>
+                        <td>
+                            <form action="{{ route('dashboard.return', [$rental->id, $copy->id]) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Vrati"><i class="bi bi-arrow-counterclockwise"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
             @endforeach
         </tbody>
     </table>

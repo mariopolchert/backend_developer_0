@@ -2,86 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PriceRequest;
 use App\Models\Price;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class PriceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        // dd(session()->all());
-        $prices = Price::all();
-
-        return view('admin.prices.index', ['prices' => $prices]);
+        $prices = Price::paginate(20);
+    
+        return view('admin.prices.index', compact('prices'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         return view('admin.prices.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(PriceRequest $request)
     {
         $data = $request->validate([
             'type' => ['required', 'string', 'unique:prices'],
             'price' => ['required', 'numeric', 'gt:0'],
             'late_fee' => ['required', 'numeric', 'gt:0'],
         ]);
-    
+
+        // Price::create([
+        //     // 3 načina pozivanja sa requestom
+        //     'tip_filma' => $request->get('tip_filma'),
+        //     'cijena' => $request->cijena,
+        //     'zakasnina_po_danu' => request()->zakasnina_po_danu,
+        // ]);
+
         Price::create($data);
-    
-        return redirect('/prices')->with('success', "Uspjesno kreirana nova cijena");
+
+        // Price::create([
+        //     'type' => $request->type,
+        //     'price' => $request->price,
+        //     'late_fee' => $request->late_fee,
+        // ]);
+
+        return redirect()->route('prices.index')->with('success', 'Uspješno spremljena cijena ' . $data['type']);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Price $price)
     {
-        return view('admin.prices.show', ['price' => $price]);
+        $price = Price::where('id', $price->id)->with('movies.genre', 'movies.copies.format')->first();
+
+        return view('admin.prices.show', compact('price'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Price $price)
     {
-        return view('admin.prices.edit', ['price' => $price]);
+        // ne treba zbog route-model bindinga
+        // $price = Price::findOrFail($price);
+        
+        return view('admin.prices.edit', compact('price'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Price $price)
+
+    public function update(PriceRequest $request, Price $price)
     {
         $data = $request->validate([
             'type' => ['required', 'string', Rule::unique('prices')->ignore($price)],
             'price' => ['required', 'numeric', 'gt:0'],
             'late_fee' => ['required', 'numeric', 'gt:0'],
         ]);
-    
-        $price->update($data);
-    
-        return redirect('/prices')->with('success', "Uspjesno uredjena cijena {$price->type}");
+
+        if ($price->update($data)){
+            $msg = 'Uspješno promijenjena cijena ' . $data['type'];
+        }else {
+            $msg = 'Nismo uspjeli apdejtati coijenu.';
+        }
+
+        return redirect()->route('prices.index')->with('success', $msg);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Price $price)
     {
         $type = $price->type;
-        $price->delete();
-        return redirect()->back()->with('message', ['type' => 'success', 'text' => "Uspjesno obrisana cijena $type"]);
+
+        try {
+            $price->delete();
+        } catch (\PDOException $e) {
+            if ($e->errorInfo[1] === 1451) {
+                return redirect()->back()->with('danger', 'Ne možete obrisati cijenu prije nego obrišete vezane filmove');
+            }
+            // ostali slucajevi
+        }
+
+        return redirect()->back()->with('success', 'Uspješno obrisana cijena ' . $type);
     }
 }

@@ -2,7 +2,7 @@
 
 @section('title', 'Dodaj medij')
 
-@section('content') 
+@section('main') 
 
     <h1>Dodaj novi medij</h1>
     <hr>

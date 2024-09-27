@@ -9,15 +9,17 @@ class Copy extends Model
 {
     use HasFactory;
 
-    public function movie(){
+    protected $guarded = ['id'];
+    
+    public function movie() {
         return $this->belongsTo(Movie::class);
     }
 
-    public function format(){
+    public function format() {
         return $this->belongsTo(Format::class);
     }
 
-    public function rentals(){
-        return $this->belongsToMany(Rental::class);
+    public function rentals() {
+        return $this->belongsToMany(Rental::class)->withPivot('return_date');
     }
 }

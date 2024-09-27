@@ -2,7 +2,7 @@
 
 @section('title', $format->type)
 
-@section('content') 
+@section('main') 
 
     <h1>{{ $format->type }}</h1>
     <hr>
@@ -34,7 +34,7 @@
     </form>
     <hr>
     <div class="col-2">
-        <a href="/format" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Povratak"><i class="bi bi-arrow-return-left"></i></a>
+        <a href="/formats" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Povratak"><i class="bi bi-arrow-return-left"></i></a>
         <a href="{{ route('formats.edit', $format->id) }}" class="btn btn-info" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Uredi"><i class="bi bi-pencil"></i></a>
         <form id="delete-form" class="hidden d-inline" method="POST" action="{{ route('formats.destroy', $format->id) }}">
             @csrf
@@ -49,24 +49,23 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Barcode</th>
+                    <th>Id</th>
                     <th>Naslov</th>
                     <th>Godina</th>
                     <th>Žanr</th>
-                    <th>Cijena</th>
-                    {{-- <th>Količina</th> --}}
+                    <th>Tip</th>
+                    <th>Količina</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($format->copies as $copy)
-
+                @foreach($movies as $movie)
                     <tr>
-                        <td>{{ $copy->barcode }}</td>
-                        <td><a href="{{ route('movies.show', $copy->movie->id) }}">{{ $copy->movie->title }}</a></td>
-                        <td>{{ $copy->movie->year }}</td>
-                        <td>{{ $copy->movie->genre->name }}</td>
-                        <td>{{ $copy->movie->price->price }}</td>
-                        {{-- <td>{{ $copy->movie->amount }}</td> --}}
+                        <td>{{ $movie->id }}</td>
+                        <td><a href="{{ route('movies.show', $movie->id) }}">{{ $movie->title }}</a></td>
+                        <td>{{ $movie->year }}</td>
+                        <td>{{ $movie->genre }}</td>
+                        <td>{{ $movie->price }}</td>
+                        <td>{{ $movie->amount }}</td>
                     </tr>
                 @endforeach
             </tbody>

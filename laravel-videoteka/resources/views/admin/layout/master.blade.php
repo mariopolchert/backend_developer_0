@@ -1,26 +1,33 @@
+<!doctype html>
 <html lang="en">
     <head>
         @include('admin.layout.head')
+        
     </head>
     <body>
         <div class="page-wrapper d-flex">
-    
-            @include('admin.layout.sidebar')
-            
-            <div class="content d-flex flex-column flex-grow-1">
-                @include('admin.layout.nav')
+            <aside class="d-flex flex-column p-3 text-bg-dark vh-100-min" style="width: 280px;">              
+                @include('admin.layout.sidebar')
 
-                @include('admin.layout.messages')
+            </aside>            
+            <div class="content d-flex flex-column flex-grow-1">
+                <nav class="p-3 text-bg-dark">                   
+                    @include('admin.layout.nav')
+
+                </nav>
+                @include('admin.layout.message')
 
                 <main class="container my-3 d-flex flex-column flex-grow-1">
-                    @yield('content')
-                </main>
+                    @yield('main')
 
-                <footer class="py-3">
+                </main>
+                <footer class="py-3 text-bg-dark">
                     @include('admin.layout.footer')
+
                 </footer>
-            </div>
-        </main>
-        @include('admin.layout.footer-scripts')
+                @include('admin.layout.footer-scripts')
+
+            </div>            
+        </div>
     </body>
 </html>

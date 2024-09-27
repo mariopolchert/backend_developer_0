@@ -9,11 +9,13 @@ class Rental extends Model
 {
     use HasFactory;
 
-    public function user(){
+    protected $guarded = ['id'];
+
+    public function user() {
         return $this->belongsTo(User::class);
     }
 
-    public function copies(){
-        return $this->belongsToMany(Copy::class);
+    public function copies() {
+        return $this->belongsToMany(Copy::class)->withPivot('return_date');
     }
 }

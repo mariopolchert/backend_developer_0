@@ -2,7 +2,7 @@
 
 @section('title', 'Uredi medij')
 
-@section('content') 
+@section('main') 
 
     <h1>Uredi medij</h1>
     <hr>
@@ -16,7 +16,7 @@
             <div class="col-6">
                 <input type="text" class="form-control" id="type" name="type" value="{{ $format->type }}" required>
                 @error('type')
-                    <span class="text-danger small">{{$message}}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>

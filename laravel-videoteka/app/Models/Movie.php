@@ -11,15 +11,15 @@ class Movie extends Model
 
     protected $guarded = ['id'];
 
-    public function genre(){
+    public function genre() {
         return $this->belongsTo(Genre::class);
     }
 
-    public function price(){
+    public function price() {
         return $this->belongsTo(Price::class);
     }
 
-    public function copies(){
+    public function copies() {
         return $this->hasMany(Copy::class);
     }
 }

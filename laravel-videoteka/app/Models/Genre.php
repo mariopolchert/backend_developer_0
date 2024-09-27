@@ -9,7 +9,9 @@ class Genre extends Model
 {
     use HasFactory;
 
-    public function movies(){
+    protected $guarded = ['id'];
+
+    public function movies() {
         return $this->hasMany(Movie::class);
     }
 }

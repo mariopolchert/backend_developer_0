@@ -2,27 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\MovieRequest;
 use App\Models\Format;
 use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Price;
-use Illuminate\Http\Request;
+use App\Services\BarcodeService;
+use Illuminate\Validation\Rule;
 
 class MovieController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $movies = Movie::with(['genre', 'price'])->latest()->paginate(20);
+        $movies = Movie::with(['genre', 'price', 'copies.format'])->latest()->paginate(20);
+
+        // callback funkcija
+        // $moviesFiltered = $movies->filter(function($movie){
+        //     return $movie->id < 100;
+        // });
+        // skraćeni zapis 
+        // $moviesFiltered = $movies->filter(fn($movie) => $movie->id < 100);
 
         return view('admin.movies.index', compact('movies'));
+
+        // JSON - JavaScript Object Notation
+        // REST API - application interface (metode i JSON)
+        // return $movies;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         $genres = Genre::all();
@@ -32,71 +40,104 @@ class MovieController extends Controller
         return view('admin.movies.create', compact('genres', 'prices', 'formats'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+
+    public function store(MovieRequest $request)
     {
-        $data = $request->validate([
-            'title' => ['required', 'string', 'max:255', 'min:2'],
-            'year' => ['required', 'numeric'],
-            'genre_id' => ['required', 'exists:genres,id'],
-            'price_id' => ['required', 'exists:prices,id'],
+        $formats = Format::all();
+
+        $rules = [
+            'title' => ['required', 'string', 'unique:movies'],
+            'year' => ['required', 'integer', 'gt:0'],
+            'genre_id' => ['required', 'integer', 'gt:0', 'exists:genres,id'],
+            'price_id' => ['required', 'integer', 'gt:0', 'exists:prices,id'],
+        ];
+
+        foreach ($formats as $format) {
+            $rules[strtolower($format->type)] = ['nullable', 'integer', 'gte:0'];
+        }
+
+        $data = $request->validate($rules);
+
+        $movie = Movie::create([
+            'title' => $data['title'],
+            'year' => $data['year'],
+            'genre_id' => $data['genre_id'],
+            'price_id' => $data['price_id'],
         ]);
 
-        Movie::create($data);
+        $barcodeService = new BarcodeService;
+        
+        $newData = [];
+        foreach ($formats as $format) {
+            if($data[strtolower($format->type)] !== null) {
+                $barcode = $barcodeService->generate($movie, $format);
+                
+                for ($i=0; $i < $data[strtolower($format->type)]; $i++) { 
+                    $newData[] = [
+                        'barcode' => $barcode,
+                        // 'movie_id' => $movie->id,
+                        'format_id' => $format->id,
+                    ];
+                }
+            }
+        }
 
-        return redirect()->route('movies.index')->with('success', "Uspjesno dodan novi film $data[title]");
+        if(!empty($newData))
+            $movie->copies()->createMany($newData);
+
+        return redirect()->route('movies.index')->with('success', 'Uspješno spremljen film ' . $data['title'] . 'i sve njegove kopije');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Movie $movie)
     {
+        $movie = Movie::where('id', $movie->id)->with(['genre', 'price', 'copies.format'])->first();
+
         return view('admin.movies.show', compact('movie'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Movie $movie)
     {
+        $movie = Movie::where('id', $movie->id)->with(['genre', 'price'])->first();
         $genres = Genre::all();
         $prices = Price::all();
 
-        return view('admin.movies.edit', compact('genres', 'prices', 'movie'));
+        return view('admin.movies.edit', compact('movie', 'genres', 'prices'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Movie $movie)
+  
+    public function update(MovieRequest $request, Movie $movie)
     {
         $data = $request->validate([
-            'title' => ['required', 'string', 'max:255', 'min:2'],
-            'year' => ['required', 'numeric'],
-            'genre_id' => ['required', 'exists:genres,id'],
-            'price_id' => ['required', 'exists:prices,id'],
+            'title' => ['required', 'string', Rule::unique('movies')->ignore($movie)],
+            'year' => ['required', 'integer', 'gt:0'],
+            'genre_id' => ['required', 'integer', 'gt:0', 'exists:genres,id'],
+            'price_id' => ['required', 'integer', 'gt:0', 'exists:prices,id'],
         ]);
 
-        // $movie->update($data);
-        $movie->title = $data['title'];
-        $movie->year = $data['year'];
-        $movie->genre_id = $data['genre_id'];
-        $movie->price_id = $data['price_id'];
-        $movie->save();
+        // drugi način updatea jednog po jednog atributa
+        // $movie->title = $data['title'];
+        // $movie->year = $data['year'];
+        // $movie->genre_id = $data['genre_id'];
+        // $movie->price_id = $data['price_id'];
+        // $movie->save();
+        
+        $movie->update($data);
 
-        return redirect()->back()->with('success', "Uspjesno uredjen film $data[title]");
+        return redirect()->route('movies.index')->with('success', 'Uspješno izmijenjen film ' . $data['title']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Movie $movie)
     {
-        $movie->delete();
+        $title = $movie->title;
+        try {
+            $movie->delete();
+        } catch (\PDOException $e) { 
+            return redirect()->back()->with('danger', 'Ne možete obrisati film prije nego obrišete vezane kopije');
+        }
 
-        return redirect()->route('movies.index')->with('success', "Uspjesno obrisan film $movie[title]");
+        return redirect()->back()->with('success', 'Uspješno obrisan film ' . $title);
     }
 }

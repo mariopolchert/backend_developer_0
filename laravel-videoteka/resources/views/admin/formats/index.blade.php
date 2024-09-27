@@ -2,7 +2,7 @@
 
 @section('title', 'Mediji')
 
-@section('content') 
+@section('main') 
 
     <div class="title flex-between">    
         <h1>Mediji</h1>

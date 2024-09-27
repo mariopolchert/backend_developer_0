@@ -2,7 +2,7 @@
 
 @section('title', 'Dodaj film')
 
-@section('content')
+@section('main')
 
     <h1>Dodaj film</h1>
     <hr>
@@ -15,7 +15,7 @@
             <div class="col-6">
                 <input type="text" class="form-control" id="title" name="title" value="{{ old('naslov') }}" required>
                 @error('title')
-                    <span class="text-danger small">{{$message}}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
@@ -24,9 +24,9 @@
                 <label for="year" class="mt-1">Godina</label>
             </div>
             <div class="col-6">
-                <input type="text" class="form-control" id="year" name="year" value="{{old('godina')}}" required>
+                <input type="text" class="form-control" id="year" name="year" value="{{ old('godina') }}" required>
                 @error('year')
-                    <span class="text-danger small">{{$message}}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
@@ -38,11 +38,11 @@
                 <select class="form-select form-select mb-2" id="genre_id" name="genre_id">
                     <option selected>Odaberi</option>
                         @foreach($genres as $genre)
-                            <option value="{{$genre->id}}">{{$genre->name}}</option>
+                            <option value="{{ $genre->id }}">{{ $genre->name }}</option>
                         @endforeach 
                 </select>
                 @error('genre_id')
-                    <span class="text-danger small">{{$message}}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
@@ -54,33 +54,33 @@
                 <select class="form-select form-select mb-2" id="price_id" name="price_id">
                     <option selected>Odaberi</option>
                         @foreach($prices as $price)
-                            <option value="{{$price->id}}">{{$price->type}}</option>
+                            <option value="{{ $price->id }}">{{ $price->type }}</option>
                         @endforeach
                 </select>
                 @error('price_id')
-                    <span class="text-danger small">{{$message}}</span>
+                    <span class="text-danger small">{{ $message }}</span>
                 @enderror
             </div>
         </div>
-        {{-- <hr>
+        <hr>
         @foreach($formats as $format)
-            @php($formatType = strtolower($format->type))
+            @php( $formatType = strtolower($format->type) )
             <div class="row mt-3">
                 <div class="col-1">
-                    <label for="{{$formatType}}" class="mt-1">{{$format->type}} količina</label>
+                    <label for="{{ $formatType }}" class="mt-1">{{ $format->type }} količina</label>
                 </div>
                 <div class="col-6">
-                    <input type="number" step="1" class="form-control" id="{{$formatType}}" name="{{$formatType}}" value="{{old($formatType)}}">
+                    <input type="number" step="1" class="form-control" id="{{ $formatType }}" name="{{ $formatType }}" value="{{ old($formatType) }}">
                     @error($formatType)
-                        <span class="text-danger small">{{$message}}</span>
+                        <span class="text-danger small">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
-        @endforeach --}}
+        @endforeach
         <hr>
         <div class="col-auto">
             <a href="/movies" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Povratak"><i class="bi bi-arrow-return-left"></i></a>
-            <button type="submit" class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Spremi"><i class="bi bi-floppy"></i></button>
+            <button class="btn btn-success" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Spremi"><i class="bi bi-floppy"></i></button>
         </div>
     </form>
 
