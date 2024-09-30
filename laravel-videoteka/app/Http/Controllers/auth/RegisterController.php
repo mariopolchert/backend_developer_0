@@ -4,7 +4,7 @@ namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Services\MembershipService;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -14,7 +14,7 @@ class RegisterController extends Controller
         return view('admin.auth.register.create');
     }
 
-    public function store()
+    public function store(MembershipService $membershipService)
     {
         $userData = request()->validate([
             'first_name' => ['required', 'string'],
@@ -24,12 +24,11 @@ class RegisterController extends Controller
             'password_confirmation' => 'required',
         ]);
 
-        $userData = array_merge($userData, ['member_id' => $userData['email']]);
+        $userData = array_merge($userData, ['member_id' => $membershipService->generate()]);
         $user = User::create($userData);
 
         Auth::login($user);
 
-        return redirect()->route('dashboard.index');
-
+        return redirect()->route('dashboard');
     }
 }

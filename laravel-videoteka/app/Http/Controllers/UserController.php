@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\Rental;
 use App\Models\User;
+use App\Services\MembershipService;
 use DateTimeImmutable;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,7 @@ class UserController extends Controller
     }
 
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request, MembershipService $membershipService)
     {
         $data = $request->validate([
             'first_name' => ['required', 'string'],
@@ -36,16 +37,8 @@ class UserController extends Controller
             'password_confirmation' => 'required',
         ]);
 
-        $users = User::all();
-        $values = range(10000, 99999);
+        $data = array_merge($data, ['member_id' => $membershipService->generate()]);
 
-        foreach ($users as $user) {
-            $taken = str_replace('user-', '', $user);
-            if (($key = array_search($taken, $values)) !== false) {
-                unset($values[$key]);
-            }
-        }
-        $data['member_id'] = 'user-' . $values[array_rand($values)];
         $data['password'] = Hash::make($data['password']);
 
         User::create($data);

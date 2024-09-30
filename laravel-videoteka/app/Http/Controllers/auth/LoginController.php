@@ -3,34 +3,45 @@
 namespace App\Http\Controllers\auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    public function create()
+    public function show()
     {
-        //varati formu za login
+        return view('admin.auth.login.show');
     }
 
-    public function store()
+    public function login()
     {
         //validate
-
-        // create session
-        Auth::attempt([
-            // 'email' =>
-            // 'password' =>
+        $data = request()->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required']
         ]);
 
+        // create session
+        if(Auth::attempt($data) === false){
+            throw ValidationException::withMessages(['email' => 'Vasi podatci ne odgovaraju nicumu u nasoj bazi']);
+        }
+
+        // session()->regenerate();
+        Session::regenerateToken();
+
         //rediect
+        return redirect()->route('dashboard');
     }
 
-    public function destroy()
+    public function logout()
     {
         // create session
         Auth::logout();
 
+        Session::invalidate();
+
         //rediect
+        return redirect()->route('home');
     }
 }

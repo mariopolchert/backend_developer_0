@@ -21,7 +21,7 @@
                 <div class="dropdown">
                     <a href="#" class="d-flex p-1 align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://logosandtypes.com/wp-content/uploads/2023/12/Algebra.png" alt="A" width="32" height="32" class="rounded-circle me-2">
-                        <strong>{{auth()->user()->name}} {{auth()->user()->surname}}</strong> 
+                        <strong>{{ auth()->user()->fullName() }}</strong> 
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                         <li><a class="dropdown-item" href="#">New project...</a></li>
@@ -30,16 +30,19 @@
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form class="ml-2 p-2 d-inline" action="/logout" method="POST">
-                                <input type="hidden" name="_method" value="DELETE">
+                                @csrf
+                                @method('DELETE')
                                 <button type="submit" class="btn btn-primary me-2">Logout</a>
                             </form>
                         </li>
                     </ul>
                 </div>
-            @else   
-                <a href="/login" type="button" class="btn btn-primary me-2">Login</a>
+            @endauth
+
+            @guest
+                <a href="{{ route('login.show') }}" type="button" class="btn btn-primary me-2">Login</a>
                 <a href="{{ route('register.create') }}" type="button" class="btn btn-warning">Sign-up</a>
-            @endauth               
+            @endguest              
         </div>
     </div>
 </div>

@@ -77,6 +77,6 @@ class DashboardController extends Controller
             ]);
         });
         
-        return redirect()->route('dashboard.index')->with('success', 'Uspješno vraćen film');
+        return redirect()->route('dashboard')->with('success', 'Uspješno vraćen film');
     }
 }

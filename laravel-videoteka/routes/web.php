@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\auth\LoginController;
 use App\Http\Controllers\auth\RegisterController;
 use App\Http\Controllers\CopyController;
 use App\Http\Controllers\DashboardController;
@@ -16,10 +17,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/login', [LoginController::class, 'show'])->name('login.show');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+Route::delete('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::controller(DashboardController::class)->group(function(){
-    Route::get('/dashboard', 'index')->name('dashboard.index');
+    Route::get('/dashboard', 'index')->name('dashboard');
     Route::patch('/dashboard/rental/{rental}/copy/{copy}', 'returnMovie')->name('dashboard.return');
 });
 
