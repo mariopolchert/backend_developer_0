@@ -13,36 +13,52 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
-Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
-
-Route::get('/login', [LoginController::class, 'show'])->name('login.show');
-Route::post('/login', [LoginController::class, 'login'])->name('login');
-Route::delete('/logout', [LoginController::class, 'logout'])->name('logout');
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::controller(DashboardController::class)->group(function(){
-    Route::get('/dashboard', 'index')->name('dashboard');
-    Route::patch('/dashboard/rental/{rental}/copy/{copy}', 'returnMovie')->name('dashboard.return');
+// rute dostupne samo ne-ulogiranim korisnicima
+Route::middleware('guest')->group(function(){
+    Route::get('/register', [RegisterController::class, 'create'])->name('register.create');
+    Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+
+    Route::get('/login', [LoginController::class, 'show'])->name('login.show')->middleware('guest');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
 });
 
-Route::resource('prices', PriceController::class);
+// rute dostiupne samo ulogiranim korisnicima
+Route::middleware('auth')->group(function(){
+    Route::delete('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('genres', GenreController::class);
+    Route::controller(DashboardController::class)->group(function(){
+        Route::get('/dashboard', 'index')->name('dashboard');
+        Route::patch('/dashboard/rental/{rental}/copy/{copy}', 'returnMovie')->name('dashboard.return');
+    });
 
-Route::resource('movies', MovieController::class);
+    Route::resource('prices', PriceController::class);
 
-Route::resource('formats', FormatController::class);
+    Route::resource('genres', GenreController::class);
 
-Route::resource('users', UserController::class);
+    Route::resource('movies', MovieController::class);
 
-Route::resource('rentals', RentalController::class);
+    Route::resource('formats', FormatController::class);
 
-Route::resource('copies', CopyController::class)->except('show');
-Route::get('/copies/{copy:barcode}', [CopyController::class, 'show'])->name('copies.show');
-Route::delete('/copies/{copy:barcode}/all', [CopyController::class, 'destroyAll'])->name('copies.destroy.all');
+    Route::resource('users', UserController::class);
+
+    Route::resource('rentals', RentalController::class);
+
+    Route::resource('copies', CopyController::class)->except('show');
+    Route::get('/copies/{copy:barcode}', [CopyController::class, 'show'])->name('copies.show');
+    Route::delete('/copies/{copy:barcode}/all', [CopyController::class, 'destroyAll'])->name('copies.destroy.all');
+});
+
+
+
+
+
+
+
+
+
+
 
 
 // Route::get('/prices', [PriceController::class, 'index'])->name('prices.index');

@@ -1,5 +1,7 @@
 ### DZ
 
-##### Napraviti Seedere i Factorije za sve Modele u app/Models direktoriju
-- koristite se primjerom Factorija i Seedera za User i Price klase
-- fake() funkcija koristi se u kombinaciji sa Faker servisom ciju dokumentaciju mozete pronaci na: https://fakerphp.org/
+##### Osmisliti bazu podataka za napredni blog
+- mora imati Korisnike kojima su pridruzene Role (User, Role)
+- mora imati clanke koji su pridruzeni jednoj kategoriji (Article, Category)
+- svaki clanak moze imati pridruzenu jednu ili vise kljucnih rijeci (Tag)
+- svaki clanak moze imati vise komentara (Comment)
