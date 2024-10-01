@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('image');// http://image.factory.com
             $table->longText('body');
+            $table->boolean('featured')->default(false);
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();
             $table->timestamps();
