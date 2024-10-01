@@ -15,12 +15,14 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach (self::ROLES as $role) {
-            Role::create([
-                'name' => $role,
-            ])->each(function(Role $role){
-                $role->user()->create();
-            });
+        foreach (self::ROLES as $roleName) {
+            $role = Role::create([
+                'name' => $roleName,
+            ]);
+
+            User::factory(5)->create([
+                'role_id' => $role->id
+            ]);
         }
     }
 }
