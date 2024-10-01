@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 
 class TagSeeder extends Seeder
 {
-    private const TAGS = ['Government', 'Crime', 'Politics', 'Weather', 'Disaster', 
+    public const TAGS = ['Government', 'Crime', 'Politics', 'Weather', 'Disaster', 
         'Health', 'Parenting', 'Shoping', 'Food', 'Travel', 'Cars',
         'Celebrity', 'Music', 'Movies', 'TV', 
         'Markets', 'Crypto', 'Industries', 'Energy', 'Science',

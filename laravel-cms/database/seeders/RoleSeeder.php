@@ -9,7 +9,7 @@ use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder
 {
-    private const ROLES = ['Member', 'Writer', 'Admin'];
+    public const ROLES = ['Member', 'Writer', 'Admin'];
     /**
      * Run the database seeds.
      */
@@ -19,9 +19,7 @@ class RoleSeeder extends Seeder
             Role::create([
                 'name' => $role,
             ])->each(function(Role $role){
-                User::factory(2)->create([
-                    'role_id' => $role->id
-                ]);
+                $role->user()->create();
             });
         }
     }

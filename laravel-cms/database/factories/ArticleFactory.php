@@ -25,7 +25,7 @@ class ArticleFactory extends Factory
             'title' => $title,
             'image' => fake()->imageUrl(),
             'slug' => Str::slug($title),
-            'body' => fake()->paragraphs(mt_rand(3.10), true),
+            'body' => fake()->paragraphs(mt_rand(3, 10), true),
             'category_id' => Category::factory()->make(),
             'user_id' => User::factory()->make(),
         ];

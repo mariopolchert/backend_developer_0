@@ -29,8 +29,8 @@ class CategorySeeder extends Seeder
                     'category_id' => $cat->id,
                     'user_id' => $users->random()->id
                 ])->each(function(Article $article) use($users){
-                    
-                    $article->tags()->attach(Tag::factory(2));
+
+                    $article->tags()->attach(Tag::inRandomOrder()->limit(rand(1,3))->pluck('id'));
 
                     Comment::factory(2)->create([
                         'article_id' => $article->id,

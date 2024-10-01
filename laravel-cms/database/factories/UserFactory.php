@@ -25,7 +25,7 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'role_id' => Role::factory()->make(),
+            'role_id' => Role::factory()->create(),
             'firstName' => fake()->firstName(),
             'lastName' => fake()->lastName(),
             'email' => fake()->unique()->safeEmail(),
