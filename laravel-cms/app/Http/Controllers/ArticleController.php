@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
+use App\Models\Category;
 
 class ArticleController extends Controller
 {
@@ -13,7 +14,9 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = Article::paginate(12);
+
+        return view('articles.index', compact('articles'));
     }
 
     /**
@@ -21,7 +24,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        $categiries = Category::all();
+
+        return view('articles.create', compact('categiries'));
     }
 
     /**
