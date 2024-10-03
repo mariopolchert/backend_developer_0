@@ -9,9 +9,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $featured = Article::with('author')->where('featured', '=', 1)->first();
-        $latest = Article::latest()->limit(2)->get();
-        $articles = Article::paginate(9);
+        $featured = Article::where('featured', true)->first();
+        $latest = Article::with('author', 'category')->latest()->limit(2)->get();
+        $articles = Article::inRandomOrder()->with('author', 'category')->paginate(9);
 
         return view('home', [
             'articles' => $articles,

@@ -20,8 +20,8 @@ class CommentFactory extends Factory
     {
         return [
             'text' => fake()->sentences(mt_rand(1,4), true),
-            'article_id' => Article::factory()->make(),
-            'user_id' => User::factory()->make()
+            'article_id' => Article::factory(),
+            'user_id' => User::factory()
         ];
     }
 }

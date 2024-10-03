@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class TagFactory extends Factory
 {
+    public const TAGS = ['Government', 'Crime', 'Politics', 'Weather', 'Disaster', 
+        'Health', 'Parenting', 'Shoping', 'Food', 'Travel', 'Cars',
+        'Celebrity', 'Music', 'Movies', 'TV', 
+        'Markets', 'Crypto', 'Industries', 'Energy', 'Science',
+        'Football', 'Basketball', 'Handball', 'Waterpolo', 'Tennis'];
+
     /**
      * Define the model's default state.
      *
@@ -18,7 +24,7 @@ class TagFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(TagSeeder::TAGS)
+            'name' => fake()->unique()->randomElement(self::TAGS)
         ];
     }
 }

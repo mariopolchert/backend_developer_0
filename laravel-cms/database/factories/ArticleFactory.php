@@ -26,8 +26,8 @@ class ArticleFactory extends Factory
             'image' => fake()->imageUrl(),
             'slug' => Str::slug($title),
             'body' => fake()->paragraphs(mt_rand(3, 10), true),
-            'category_id' => Category::factory()->make(),
-            'user_id' => User::factory()->make(),
+            'category_id' => Category::factory(),
+            'user_id' => User::factory(),
         ];
     }
 }

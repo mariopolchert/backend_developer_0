@@ -60,7 +60,7 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function name()
+    public function fullName()
     {
         return "$this->firstName $this->lastName";
     }
