@@ -2,70 +2,59 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreArticleRequest;
-use App\Http\Requests\UpdateArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Tag;
+use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $articles = Article::paginate(12);
+        $articles = Article::with('author', 'tags', 'category')->latest()->paginate(10);
 
         return view('articles.index', compact('articles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $categiries = Category::all();
+        $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('articles.create', compact('categiries'));
+        return view('articles.create', compact('categories', 'tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreArticleRequest $request)
+    public function store(ArticleRequest $request)
     {
-        //
+        $article = Article::create([
+            'title' => $request->title,
+            'slug' => Str::slug($request->title),
+            'body' => $request->body,
+            // 'user_id' => auth()->id(),
+            'user_id' => Auth::id(),
+            'category_id' => $request->category,
+        ]);
+
+        $article->tags()->attach($request->tags);
+
+        if ($image = $request->file('image')) {
+             $path = $image->store("images/articles/$article->id", "public");
+             $article->update(['image' => $path]);
+        }
+
+        // return redirect()->route('articles.index')->with('flash_message', 'Porkua');
+        return redirect()->route('articles.index')->withFlashMessage("Uspjesno kreiran Article");
+
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Article $article)
     {
-        //
+        return view('articles.show', compact('article'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Article $article)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateArticleRequest $request, Article $article)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Article $article)
-    {
-        //
-    }
 }
