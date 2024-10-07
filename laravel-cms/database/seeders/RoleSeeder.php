@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Role;
 use Database\Factories\RoleFactory;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class RoleSeeder extends Seeder
 {
@@ -26,5 +26,14 @@ class RoleSeeder extends Seeder
                 'role_id' => $role->id
             ]);
         }
+
+        // dodavanje jednog korisnika za testiranje
+        User::factory()->create([
+            'firstName' => 'Test',
+            'lastName' => 'Member',
+            'email' => 'test@member.com',
+            'password' => Hash::make('123'),
+            'role_id' => $role->id
+        ]);
     }
 }

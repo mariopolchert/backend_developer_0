@@ -16,7 +16,11 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
+            @session('flash_message')
+                <x-notification>{{ $value }}</x-notification>
+            @endsession
             @include('layouts.navigation')
+            
 
             <!-- Page Heading -->
             @isset($header)
@@ -28,7 +32,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="py-4">
                 {{ $slot }}
             </main>
         </div>

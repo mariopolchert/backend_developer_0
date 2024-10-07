@@ -19,8 +19,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('image');// http://image.factory.com
+            $table->string('image')->nullable();
             $table->longText('body');
+            $table->integer('views')->default(0);
             $table->boolean('featured')->default(false);
             $table->foreignIdFor(User::class)->constrained();
             $table->foreignIdFor(Category::class)->constrained();

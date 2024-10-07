@@ -4,14 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTagRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string'],
+            'image' => ['nullable', 'file', 'image', 'mimes:jpg,png'],
+            'body' => ['required', 'string'],
+            'tags' => ['nullable', 'exists:tags,id'],
+            'category' => ['required', 'exists:categories,id'],
         ];
     }
 }

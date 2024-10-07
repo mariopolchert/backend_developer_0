@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
             'firstName' => ['required', 'string', 'max:255'],
             'lastName' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed'/*, Rules\Password::defaults()*/],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $memberRole = Role::where('name', 'Member')->first();
