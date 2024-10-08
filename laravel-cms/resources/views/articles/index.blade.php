@@ -6,9 +6,9 @@
     <x-slot:header>
         <div class="flex justify-between items-center">
             <h3 class="text-xl">{{ $header ?? 'Articles' }}</h3>
-            {{-- @can('create', Article::class) --}}
+            @can('create', Article::class)
                 <a href="{{ route('articles.create') }}" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create new Article</a>
-            {{-- @endcan --}}
+            @endcan
         </div>
     </x-slot>
 

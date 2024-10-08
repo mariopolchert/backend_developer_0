@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTagRequest;
-use App\Http\Requests\UpdateTagRequest;
+use App\Http\Requests\TagRequest;
 use App\Models\Tag;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -27,9 +28,25 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTagRequest $request)
+    public function store(Request $request)
     {
-        //
+        $tags = $request->additionalTag;
+
+        if (str_contains($tags , ',')) {
+            $tags = explode(',', $tags );
+        }
+
+        if (is_array($tags)) {
+            foreach ($tags as $tag) {
+                Validator::make(['name' => $tag], ['title' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
+                Tag::create(['name' => $tag]);
+            }
+        } else {
+            Validator::make(['name' => $tags], ['title' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
+            Tag::create(['name' => $tags]);
+        }
+
+        return redirect()->back()->withFlashMessage("Oznaka je uspješno dodana");
     }
 
     /**
@@ -51,7 +68,7 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTagRequest $request, Tag $tag)
+    public function update(TagRequest $request, Tag $tag)
     {
         //
     }

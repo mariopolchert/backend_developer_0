@@ -23,6 +23,8 @@ class ArticleController extends Controller
 
     public function create()
     {
+        Gate::authorize('create');
+
         $categories = Category::all();
         $tags = Tag::all();
 
@@ -31,6 +33,8 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request)
     {
+        Gate::authorize('create');
+
         $article = Article::create([
             'title' => $request->title,
             'slug' => Str::slug($request->title),
@@ -56,5 +60,69 @@ class ArticleController extends Controller
     {
         return view('articles.show', compact('article'));
     }
+
+    public function edit(Article $article)
+    {
+        Gate::authorize('update', $article);
+
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('articles.edit', compact('article', 'categories', 'tags'));
+    }
+
+    public function update(ArticleRequest $request, Article $article)
+    {
+        Gate::authorize('update', $article);
+        
+        $article->update([
+            'title' => $request->title,
+            'body' => $request->body,
+            'category_id' => $request->category,
+        ]);
+
+        if ($image = $request->file('image')) {
+            Storage::disk('public')->delete($article->image);
+
+            $path = $image->store("images/articles/$article->id", "public");
+            $article->update(['image' => $path]);
+        }
+
+        if ($request->tags) {
+            $article->tags()->sync($request->tags);
+        } else {
+            $article->tags()->detach();
+        }
+
+        return redirect()->back()->withFlashMessage("Article je apdejtan");
+    }
+
+    public function destroy(Article $article)
+    {
+        $article->delete();
+
+        return redirect()->route('articles.index')->withFlashMessage("Article je obrisan");
+    }
+
+    public function byAuthor()
+    {
+
+    }
+
+    public function byTag()
+    {
+
+    }
+
+    public function byCategory(Category $category)
+    {
+        // $articles = Article::where('category_id', $id)->with('author', 'tags')->latest()->paginate(10);
+        // $articles = Article::whereCategoryId($id)->with('author', 'tags')->latest()->paginate(10);
+        $articles = $category->articles()->with('author', 'tags')->latest()->paginate(10);
+        $header = "Articles in category $category->name";
+
+        return view('articles.index', compact('articles', 'header'));
+    }
+
 
 }

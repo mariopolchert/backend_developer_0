@@ -6,13 +6,14 @@
     <x-slot:header>
         <div class="flex justify-between">
             <h3 class="text-xl">Articles Create</h3>
-            <x-algebra.button type="submit" class="mr-6" boja="red">Pritisni me</x-button>
-            <x-algebra.button href="http://google.hr" :link="true">Link</x-button>
+            <x-algebra.button type="submit" class="mr-6" boja="red">Pritisni me</x-algebra.button>
+            <x-algebra.button href="http://google.hr" :link="true">Link</x-algebra.button>
         </div>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+    
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <section>
                     <form method="post" action="{{ route('articles.store') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
@@ -59,14 +60,25 @@
                               
                               <fieldset>
                                 <legend class="text-sm font-semibold leading-6 text-gray-900">Choose Tags</legend>
+
                                 <div class="mt-6 flex flex-wrap items-center gap-6">
-                                  {{-- ispsati checkboxes za tagove i da bude checked old --}}
-                                    <div class="relative flex gap-3">
-                                        <x-algebra.button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-tag')">+</x-button>
-                                    </div>
+
+                                    @foreach ($tags as $tag)
+                                        @php($checked = old('tags') && in_array($tag->id, old('tags')))
+                                        
+                                        <div class="relative flex gap-3">
+                                            <div class="flex h-6 items-center">
+                                                <input {{ $checked ? 'checked' : '' }} type="checkbox" id="tags-{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600" />
+                                            </div>
+                                            <div class="text-sm leading-6">
+                                                <label for="tags-{{ $tag->id }}" class="font-medium text-gray-900">{{ $tag->name }}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <x-algebra.button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-tag')">+</x-algebra.button>
                                 </div>
+
                                 <x-input-error :messages="$errors->get('tags')" class="mt-2" />
-                                <x-input-error :messages="$errors->get('additionalTag')" class="mt-2" />
                               </fieldset>
                             </div>
                           </div>
