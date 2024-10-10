@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Database\Seeders\CategorySeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Category>
@@ -20,10 +20,12 @@ class CategoryFactory extends Factory
     public function definition(): array
     {
         $key = array_rand(self::CATEGORIES);
+        $name = self::CATEGORIES[$key];
 
         return [
-            'name' => self::CATEGORIES[$key],
-            'order' => ++$key
+            'name' => $name,
+            'order' => ++$key,
+            'slug' => Str::slug($name)
         ];
     }
 }

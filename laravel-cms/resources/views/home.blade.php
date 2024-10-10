@@ -97,7 +97,7 @@
           
               <!-- Featured Article -->
               @if ($featured !== null)
-                <a href="{{ route('articles.show', $featured->id) }}" class="mx-auto max-w-7xl sm:px-6 lg:px-8 block cursor-pointer">
+                <a href="{{ route('articles.show', $featured) }}" class="mx-auto max-w-7xl sm:px-6 lg:px-8 block cursor-pointer">
                   <div class="relative overflow-hidden bg-gray-900 px-6 py-20 shadow-xl sm:rounded-3xl sm:px-10 sm:py-24 md:px-12 lg:px-20">
                     <img class="absolute inset-0 h-full w-full object-cover brightness-150 saturate-0" src="{{ $featured->image }}" alt="">
                     <div class="absolute inset-0 bg-gray-900/90 mix-blend-multiply"></div>

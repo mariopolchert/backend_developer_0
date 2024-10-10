@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Database\Seeders\TagSeeder;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tag>
