@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <section>
-                    <form method="post" action="{{ route('articles.update', $article->id) }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+                    <form method="post" action="{{ route('articles.update', $article) }}" class="mt-6 space-y-6" enctype="multipart/form-data">
                         @csrf
                         @method('PATCH')
 
@@ -67,14 +67,8 @@
                                 <div class="mt-6 flex flex-wrap items-center gap-6">
                                     @foreach ($tags as $tag)
                                         <div class="relative flex gap-3">
-                                            <div class="flex h-6 items-center">
-                                                <input id="tag-{{ $tag->id }}" name="tags[]" type="checkbox" value="{{ $tag->id }}"
-                                                {{ $tag->articles->contains($article) ? 'checked' : '' }} class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-                                            </div>
-                                            <div class="text-sm leading-6">
-                                                <label for="tag-{{ $tag->id }}" class="font-medium text-gray-900">{{ $tag->name }}</label>
-                                            </div>
-                                      </div>
+                                            <x-checkbox id="tag-{{ $tag->id }}" name="tags[]" value="{{ $tag->id }}" :label="$tag->name" for="tag-{{ $tag->id }}" :checked="$tag->articles->contains($article)" />
+                                        </div>
                                     @endforeach
                                     <div class="relative flex gap-3">
                                         <x-algebra.button type="button" x-data="" x-on:click.prevent="$dispatch('open-modal', 'create-tag')">+</x-algebra.button>

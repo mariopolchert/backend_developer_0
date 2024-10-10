@@ -23,7 +23,7 @@ class ArticleController extends Controller
 
     public function create()
     {
-        Gate::authorize('create');
+        // Gate::authorize('create', Article::class);
 
         $categories = Category::all();
         $tags = Tag::all();
@@ -33,7 +33,7 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        Gate::authorize('create');
+        // Gate::authorize('create', Article::class);
 
         $article = Article::create([
             'title' => $request->title,
@@ -63,7 +63,7 @@ class ArticleController extends Controller
 
     public function edit(Article $article)
     {
-        Gate::authorize('update', $article);
+        // Gate::authorize('update', $article);
 
         $categories = Category::all();
         $tags = Tag::all();
@@ -73,8 +73,8 @@ class ArticleController extends Controller
 
     public function update(ArticleRequest $request, Article $article)
     {
-        Gate::authorize('update', $article);
-        
+        // Gate::authorize('update', $article);
+
         $article->update([
             'title' => $request->title,
             'body' => $request->body,
@@ -104,14 +104,21 @@ class ArticleController extends Controller
         return redirect()->route('articles.index')->withFlashMessage("Article je obrisan");
     }
 
-    public function byAuthor()
+    public function byAuthor(int $id)
     {
+        $user = User::where('id', $id)->firstOrFail();
+        $articles = $user->articles()->with('author', 'tags')->latest()->paginate(10);
+        $header = $user->fullName() . "'s articles";
 
+        return view('articles.index', compact('articles', 'header'));
     }
 
-    public function byTag()
+    public function byTag(Tag $tag)
     {
+        $articles = $tag->articles()->with('author', 'tags', 'category')->latest()->paginate(10);
+        $header = "Articles with $tag->name";
 
+        return view('articles.index', compact('articles', 'header'));
     }
 
     public function byCategory(Category $category)
@@ -123,6 +130,4 @@ class ArticleController extends Controller
 
         return view('articles.index', compact('articles', 'header'));
     }
-
-
 }

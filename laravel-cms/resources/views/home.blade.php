@@ -137,7 +137,7 @@
                   </div>
                   <div class="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-2">
                     @foreach ($latest as $article)
-                    <a href="{{ route('articles.show', $article->id) }}" class="inline-block cursor-pointer">
+                    <a href="{{ route('articles.show', $article) }}" class="inline-block cursor-pointer">
                       <article class="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pb-8 pt-20">
                           <img src="{{ $article->image }}" alt="" class="absolute inset-0 -z-10 h-full w-full object-cover">
                           <div class="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
@@ -178,7 +178,7 @@
                   </div>
                   <div class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3 pb-8">
                     @foreach ($articles as $article)
-                    <a href="{{ route('articles.show', $article->id) }}" class="inline-block cursor-pointer">
+                    <a href="{{ route('articles.show', $article) }}" class="inline-block cursor-pointer">
                       <article class="flex flex-col items-start justify-between">
                         <div class="relative w-full">
                           <img src="{{ $article->image }}" alt="" class="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]">
