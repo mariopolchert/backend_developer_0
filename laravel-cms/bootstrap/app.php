@@ -12,6 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Middleware dodan u Web grupu middlewwarea, biti ce pozvan na svakom requestu
+        // $middleware->web([
+        //     'writer' => CheckUserIsWriter::class,
+        //     'writer' => CheckUserIsWriter::class,
+        // ]);
+
+        // biti ce pozvan samo pozivanjem kljuca "writer"
         $middleware->alias([
             'writer' => CheckUserIsWriter::class,    
         ]);

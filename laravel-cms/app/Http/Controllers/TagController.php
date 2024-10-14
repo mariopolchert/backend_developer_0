@@ -30,7 +30,7 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        $tags = $request->additionalTag;
+        $tags = $request->name;
 
         if (str_contains($tags , ',')) {
             $tags = explode(',', $tags );
@@ -38,11 +38,11 @@ class TagController extends Controller
 
         if (is_array($tags)) {
             foreach ($tags as $tag) {
-                Validator::make(['name' => $tag], ['title' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
+                Validator::make(['name' => $tag], ['name' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
                 Tag::create(['name' => $tag]);
             }
         } else {
-            Validator::make(['name' => $tags], ['title' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
+            Validator::make(['name' => $tags], ['name' => 'required|min:3|max:255|unique:tags,name'])->validateWithBag('additionalTagCreation');
             Tag::create(['name' => $tags]);
         }
 

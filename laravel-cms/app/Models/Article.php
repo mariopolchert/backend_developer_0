@@ -10,7 +10,14 @@ class Article extends Model
 {
     use HasFactory, Sluggable;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'title',
+        'image',
+        'slug',
+        'body',
+        'category_id',
+        'user_id',
+    ];
 
     public function sluggable(): array
     {

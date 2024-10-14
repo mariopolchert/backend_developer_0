@@ -9,13 +9,13 @@
         <div class="mt-6">
             <x-text-input
                 id="additionalTag"
-                name="additionalTag"
+                name="name"
                 type="text"
                 class="mt-1 block w-3/4 p-2"
                 placeholder="Bussines,Travel"
             />
 
-            <x-input-error :messages="$errors->additionalTagCreation->get('additionalTag')" class="mt-2" />
+            <x-input-error :messages="$errors->additionalTagCreation->get('name')" class="mt-2" />
         </div>
 
         <div class="mt-6 flex justify-end">

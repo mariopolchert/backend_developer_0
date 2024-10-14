@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class CheckUserIsWriter
@@ -15,8 +16,12 @@ class CheckUserIsWriter
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->user()?->role->name !== 'Writer') {
-            abort(403);
+        $role = $request->user()?->role->name;
+
+        if ($role === 'Writer') {
+            return redirect()->route('user.articles', ['author' => $request->user()]);
+        }elseif ($role === 'Member') {
+            return redirect()->route('articles.index');
         }
 
         return $next($request);

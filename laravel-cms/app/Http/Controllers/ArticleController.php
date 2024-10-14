@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleRequest;
+use App\Mail\ArticleCreated;
+use App\Mail\ArticleUpdated;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -33,14 +35,12 @@ class ArticleController extends Controller
 
     public function store(ArticleRequest $request)
     {
-        // Gate::authorize('create', Article::class);
+        $user = Auth::user();
 
         $article = Article::create([
             'title' => $request->title,
-            'slug' => Str::slug($request->title),
             'body' => $request->body,
-            // 'user_id' => auth()->id(),
-            'user_id' => Auth::id(),
+            'user_id' => $user->id,
             'category_id' => $request->category,
         ]);
 
@@ -51,9 +51,9 @@ class ArticleController extends Controller
              $article->update(['image' => $path]);
         }
 
-        // return redirect()->route('articles.index')->with('flash_message', 'Porkua');
-        return redirect()->route('articles.index')->withFlashMessage("Uspjesno kreiran Article");
+        Mail::to($user->email)->send(new ArticleCreated($article, $user));
 
+        return redirect()->route('articles.index')->withFlashMessage("Uspjesno kreiran Article");
     }
 
     public function show(Article $article)
@@ -73,8 +73,6 @@ class ArticleController extends Controller
 
     public function update(ArticleRequest $request, Article $article)
     {
-        // Gate::authorize('update', $article);
-
         $article->update([
             'title' => $request->title,
             'body' => $request->body,
@@ -93,6 +91,10 @@ class ArticleController extends Controller
         } else {
             $article->tags()->detach();
         }
+
+        $user = $request->user();
+
+        Mail::to("aleksandar.dobrinic@predavaci.algebra.hr")->send(new ArticleUpdated($article, $user));
 
         return redirect()->back()->withFlashMessage("Article je apdejtan");
     }
