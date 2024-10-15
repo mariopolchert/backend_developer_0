@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArticleRequest;
 use App\Mail\ArticleCreated;
+use App\Mail\ArticleDeleted;
 use App\Mail\ArticleUpdated;
 use App\Models\Article;
 use App\Models\Category;
@@ -101,7 +102,14 @@ class ArticleController extends Controller
 
     public function destroy(Article $article)
     {
+        $author = $article->load('author')->author;
+        $user = Auth::user();
+
         $article->delete();
+
+        if ($author->id !== $user->id) {
+            Mail::to($author->email)->send(new ArticleDeleted($article, $user, $author));
+        }
 
         return redirect()->route('articles.index')->withFlashMessage("Article je obrisan");
     }
