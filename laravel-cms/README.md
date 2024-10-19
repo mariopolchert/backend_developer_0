@@ -7,9 +7,9 @@ git clone https://github.com/adobrini-algebra/backend_developer_0.git
 
 cd backend_developer_0/laravel-cms
 
-composer install
-
 cp .env.example .env
+
+composer install
 ```
 
 - u .env datoteci urediti pristupne podatke za bazu i ostale kljuceve po potrebi
@@ -26,3 +26,10 @@ npm install
 npm run build
 ```
 
+- ako imate gresku sa file permissionima izvrsite slijedece naredbe
+
+```
+sudo chown -R $USER:www-data storage/ bootstrap/cache/
+
+sudo chmod -R 775 storage/ bootstrap/cache/
+```
