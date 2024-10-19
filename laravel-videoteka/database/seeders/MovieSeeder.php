@@ -8,7 +8,6 @@ use App\Models\Genre;
 use App\Models\Movie;
 use App\Models\Price;
 use App\Services\BarcodeService;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class MovieSeeder extends Seeder
@@ -35,7 +34,7 @@ class MovieSeeder extends Seeder
                     foreach ($allFormats as $format) {
                         $movie->copies()->save(Copy::factory()->create([
                             'format_id' => $format,
-                            'barcode' => $barcdeService->generate($movie, $format->type)
+                            'barcode' => $barcdeService->generate($movie, $format)
                         ]));
                     }
                 });

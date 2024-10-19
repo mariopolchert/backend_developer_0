@@ -22,15 +22,7 @@ class DatabaseSeeder extends Seeder
             FormatSeeder::class,
             MovieSeeder::class,
             RentalSeeder::class,
+            UserSeeder::class,
         ]);
-
-
-
-
-        // Price::factory(3)->create();
-        // User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
     }
 }

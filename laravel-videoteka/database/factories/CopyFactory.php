@@ -24,7 +24,7 @@ class CopyFactory extends Factory
         $format = Format::inRandomOrder()->first();
 
         $barcdeService = new BarcodeService();
-        $barcode = $barcdeService->generate($movie, $format->type);
+        $barcode = $barcdeService->generate($movie, $format);
 
         return [
             'barcode' => $barcode,

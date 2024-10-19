@@ -4,8 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Copy;
 use App\Models\Rental;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class RentalSeeder extends Seeder
