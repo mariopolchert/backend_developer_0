@@ -1,7 +1,9 @@
-version: '3'
-
 networks:
   laravel:
+
+volumes:
+  mysql_data:
+  redis_data:
 
 services:
   app:
@@ -10,11 +12,10 @@ services:
       dockerfile: nginx.dockerfile
       args:
         - UID=${UID:-1000}
-        - GID=${GID:-1000}
     ports:
       - "80:80"
     volumes:
-      - ./src:/var/www/html:delegated
+      - .:/var/www/html:delegated
     depends_on:
       - php
       - redis
@@ -30,12 +31,14 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    volumes:
+      - mysql_data:/var/lib/mysql
     networks:
       - laravel
 
@@ -45,11 +48,10 @@ services:
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
-        - GID=${GID:-1000}
     ports:
       - "9000:9000"
     volumes:
-      - ./src:/var/www/html:delegated
+      - .:/var/www/html:delegated
     networks:
       - laravel
 
@@ -58,6 +60,8 @@ services:
     restart: unless-stopped
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
     networks:
       - laravel
 
@@ -67,9 +71,8 @@ services:
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
-        - GID=${GID:-1000}
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
     depends_on:
       - php
     entrypoint: [ 'composer', '--ignore-platform-reqs' ]
@@ -79,7 +82,7 @@ services:
   npm:
     image: node:current-alpine
     volumes:
-      - ./src:/var/www/html
+      - .:/var/www/html
     ports:
       - "3000:3000"
       - "3001:3001"
@@ -95,9 +98,8 @@ services:
       dockerfile: php.dockerfile
       args:
         - UID=${UID:-1000}
-        - GID=${GID:-1000}
     volumes:
-      - ./src:/var/www/html:delegated
+      - .:/var/www/html:delegated
     depends_on:
       - mysql
     entrypoint: [ 'php', '/var/www/html/artisan' ]
