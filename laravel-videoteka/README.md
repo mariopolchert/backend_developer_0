@@ -1,7 +1,13 @@
-### DZ
+### Dovrsetak sa predavanja
 
-##### Osmisliti bazu podataka za napredni blog
-- mora imati Korisnike kojima su pridruzene Role (User, Role)
-- mora imati clanke koji su pridruzeni jednoj kategoriji (Article, Category)
-- svaki clanak moze imati pridruzenu jednu ili vise kljucnih rijeci (Tag)
-- svaki clanak moze imati vise komentara (Comment)
+- u docker-compose.yml zamijeniti ports:
+```bash
+    ports:
+      - ${FORWARD_DB_PORT}:3306
+```
+- u .env dodati:
+```bash
+    DB_PORT=3306
+    FORWARD_DB_PORT=3307
+```
+- posjetiti aplikaciju na: http://localhost:8000/
